@@ -38,8 +38,8 @@ class UserManager(models.Manager):
         return errors
 
 class User(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    nombre = models.CharField(max_length=255)
+    apellido = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,4 +48,4 @@ class User(models.Model):
     objects = UserManager()
     
     def __repr__(self):
-        return f"<User object: ID: {self.id} | Name: {self.first_name} {self.last_name} | Email: {self.email} >"
+        return f"<User object: ID: {self.id} | Name: {self.nombre} {self.apellido} | Email: {self.email} >"
