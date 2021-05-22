@@ -1,4 +1,34 @@
 {% extends 'master/base.html' %}
 {% load static %}
+{% block titulo %}Página de la tienda{% endblock %}
+{% block contenido %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand active" href="{% url 'crypto:crypto_home' %}">Ecommerce</a>
+    <button class="navbar-toggler fa fa-fw fa-home" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'crypto:about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'crypto:crypto_prices' %}">Prices</a>
+        </li>
+      </ul>
+      <form action="{% url 'crypto:crypto_prices' %}" method="POST" class="d-flex">
+        {% csrf_token %}
+        <input class="form-control me-2" name="quote" type="search" placeholder="Get Currency Quote" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <h2>aquí van los poductos</h2>
+  </div>
+</div>
 
-{% block titulo %}Página de Productos{% endblock %}
+{% endblock %}
