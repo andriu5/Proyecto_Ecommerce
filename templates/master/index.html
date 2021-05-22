@@ -4,30 +4,35 @@
 {% block contenido %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand active" href="{% url 'crypto:crypto_home' %}">Ecommerce</a>
-    <button class="navbar-toggler fa fa-fw fa-home" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span><img src="" alt=""><a class="navbar-brand active" href="#">Ecommerce</a></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'crypto:about' %}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'crypto:crypto_prices' %}">Prices</a>
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="#">Inicia sesión</a>
         </li>
       </ul>
-      <form action="{% url 'crypto:crypto_prices' %}" method="POST" class="d-flex">
-        {% csrf_token %}
-        <input class="form-control me-2" name="quote" type="search" placeholder="Get Currency Quote" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <a class="d-flex nav-link link-light" href="#">Cerrar Sesión</a>
+      <a class="d-flex nav-link link-light" href="#">
+        <img id="shoppingCart" src="{% static 'master/img/shopping_cart.png' %}" alt="Icono Carrito de Compras">
+        <span id="productsCount">1</span>
+      </a>
     </div>
   </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <h2>aquí van los poductos</h2>
+    <div class="col-3"  style="border: 1px solid black;">
+      <h2>el formulario product name</h2>
+      <br>
+      <h3>lista de categorias</h3>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-8"  style="border: 1px solid black;">
+      <h2>aquí van los poductos</h2>
+    </div>
   </div>
 </div>
 
