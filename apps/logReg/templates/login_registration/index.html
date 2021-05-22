@@ -1,3 +1,5 @@
+{% extends 'master/base.html' %}
+{% block contenido %}
 <body>
     <div class="container">
         {% if messages %}
@@ -13,18 +15,18 @@
         {% endif %}
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6 my-5 jumbotron">
-                <h4>Resgistration</h4>
-                <form id="form1" action="{% url 'logReg:register' %}" method="POST">
+                <h4>Registro</h4>
+                <form id="form1" action="{% url 'usuarios:register' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group row">
-                        <label for="first_name-id" class="col-sm-4 col-form-label">First Name:</label>
+                        <label for="first_name-id" class="col-sm-4 col-form-label">Nombre:</label>
                         <div class="col-sm-6">
                             <input id="first_name-id" placeholder="Enter First Name" name="nombre" class="form-control inp-style" type="text" required>
                         </div>
                     </div>
                     <br>
                     <div class="form-group row">
-                        <label for="last_name-id" class="col-sm-4 col-form-label">Last Name:</label>
+                        <label for="last_name-id" class="col-sm-4 col-form-label">Apellido:</label>
                         <div class="col-sm-6">
                             <input id="last_name-id" placeholder="Enter Last Name" name="apellido" class="form-control inp-style" type="text" required>
                         </div>
@@ -45,18 +47,18 @@
                     </div>
                     <br>
                     <div class="form-group row">
-                        <label for="confirmPassword-id" class="col-sm-4 col-form-label">Confirm Password:</label>
+                        <label for="confirmPassword-id" class="col-sm-4 col-form-label">Confirmar Password:</label>
                         <div class="col-sm-6">
                             <input id="confirmPassword-id" placeholder="Repeat Password" name="confirmPassword" class="form-control inp-style" type="password" required>
                         </div>
                     </div>
                     <br>
-                    <button type="submit" name="logReg" value="register" class="center-btn btn btn-primary">Register</button>
+                    <button type="submit" name="logReg" value="register" class="center-btn btn btn-primary">Registro</button>
                 </form>
             </div>
             <div class="col-12 col-sm-6 my-5 jumbotron">
-                <h4>Login</h4>
-                <form id="form2" action="{% url 'logReg:login' %}" method="POST">
+                <h4>Acceso</h4>
+                <form id="form2" action="{% url 'usuarios:login' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group row">
                         <label for="email-id2" class="col-sm-4 col-form-label">Email:</label>
@@ -72,10 +74,11 @@
                         </div>
                     </div>
                     <br>
-                    <button type="submit" name="logReg" value="login" class="center-btn btn btn-primary">Log In</button>
+                    <button type="submit" name="logReg" value="login" class="center-btn btn btn-primary">Acceso</button>
                 </form>
             </div>
         </div>
     </div>
 </body>
 </html>
+{% endblock %}

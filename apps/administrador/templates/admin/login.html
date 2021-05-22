@@ -1,21 +1,24 @@
+{% extends 'master/base.html' %}
+{% block content %}
 <div class="col-12 col-sm-6 my-5 jumbotron">
-    <h4>Login</h4>
-    <form id="form2" action="{% url 'logReg:login' %}" method="POST">
-        {% csrf_token %}
-        <div class="form-group row">
-            <label for="email-id2" class="col-sm-4 col-form-label">Email:</label>
-            <div class="col-12 col-sm-6">
-                <input id="email-id2" placeholder="Enter Email" name="email" class="form-control inp-style" type="text" required>
-            </div>
-        </div>
-        <br>
-        <div class="form-group row">
-            <label for="password-id2" class="col-sm-4 col-form-label">Password:</label>
-            <div class="col-12 col-sm-6">
-                <input id="password-id2" placeholder="Enter Password" name="password" class="form-control inp-style" type="password" required>
-            </div>
-        </div>
-        <br>
-        <button type="submit" name="logReg" value="login" class="center-btn btn btn-primary">Log In</button>
-    </form>
+  <h4>Login</h4>
+  <form id="form2" action="{% url 'logReg:login' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group row">
+      <label for="email-id2" class="col-sm-4 col-form-label">Email:</label>
+      <div class="col-12 col-sm-6">
+        <input id="email-id2" placeholder="Enter Email" name="email" class="form-control inp-style" type="text" required>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <label for="password-id2" class="col-sm-4 col-form-label">Password:</label>
+      <div class="col-12 col-sm-6">
+        <input id="password-id2" placeholder="Enter Password" name="password" class="form-control inp-style" type="password" required>
+      </div>
+    </div>
+    <br>
+    <button type="submit" name="logReg" value="login" class="center-btn btn btn-primary">Log In</button>
+  </form>
 </div>
+{% endblock %}

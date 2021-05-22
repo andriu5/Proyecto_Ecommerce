@@ -28,13 +28,13 @@ def register(request):
                 password = request.POST['password']
                 pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()  # create the hash
 
-                new_user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pw_hash)
-                print(f"Info: Nuevo Usuario agregado a la base de datos.\n Nombre: {new_user.first_name} {new_user.last_name} | Email: {new_user.email}")
+                new_user = User.objects.create(nombre=request.POST['nombre'], apellido=request.POST['apellido'], nivel_usuario=1, email=request.POST['email'], password=pw_hash)
+                print(f"Info: Nuevo cliente agregado a la base de datos.\n Nombre: {new_user.nombre} {new_user.apellido} | Email: {new_user.email}")
                 #messages.success(request,"Successfully registered!")
                 request.session['user'] = {
                     'id': new_user.id,
-                    'name': new_user.first_name,
-                    'lastname': new_user.last_name
+                    'name': new_user.nombre,
+                    'lastname': new_user.apellido
                     }
                 return redirect("usuarios:success") # nunca renderizar en una publicación, ¡siempre redirigir!
 
@@ -62,8 +62,8 @@ def login(request):
                 user = User.objects.get(email = request.POST['email'])
                 request.session['user'] = {
                     'id': user.id,
-                    'name': user.first_name,
-                    'lastname': user.last_name
+                    'name': user.nombre,
+                    'lastname': user.apellido
                 }
                 # asumiendo tenemos un usuario con este nombre de usuario, éste sería el primero en la lista que obtenemos
                 # por supuesto, deberíamos tener cierta lógica para evitar duplicados de nombres cuando creamos usuarios
