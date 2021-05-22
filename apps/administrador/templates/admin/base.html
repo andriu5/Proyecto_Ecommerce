@@ -1,0 +1,23 @@
+    {% load static %}
+  </head>
+  <body>
+    <div class="container">
+      {% if messages %}
+        {% for message in messages %}
+        <div id="info" class="alert alert-warning">
+          <button type="button" class="close btn1" data-dismiss="alert"><small><sup>x</sup></small></button>
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+      <br>
+      <br>
+      {% block content %}
+      {% endblock %}
+    </div>
+    <!-- My Local JavaScript -->
+    <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="{% static 'js/functions.js' %}"></script>
+  </body>
+</html>

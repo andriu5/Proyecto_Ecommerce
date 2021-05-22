@@ -9,4 +9,4 @@ from django.http import JsonResponse
 # Create your views here.
 def index(request):
     if request.method == "GET":
-        return render(request, "admin/index.html")
+        return render(request, "admin/base.html")

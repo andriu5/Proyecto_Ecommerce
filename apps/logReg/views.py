@@ -17,13 +17,13 @@ def register(request):
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('logReg:index')
+        return redirect('usuarios:index')
     else:
         if request.method == "POST":
             #Verificar Email!
             if User.objects.filter(email=request.POST['email']).exists():
                 messages.add_message(request, messages.ERROR, f"Error: email '{request.POST['email']}' is already taken!")
-                return redirect('logReg:index')
+                return redirect('usuarios:index')
             else:
                 password = request.POST['password']
                 pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()  # create the hash
@@ -36,14 +36,14 @@ def register(request):
                     'name': new_user.first_name,
                     'lastname': new_user.last_name
                     }
-                return redirect("logReg:success") # nunca renderizar en una publicación, ¡siempre redirigir!
+                return redirect("usuarios:success") # nunca renderizar en una publicación, ¡siempre redirigir!
 
 def success(request):
     if request.method == "GET":
         if 'user' not in request.session.keys():
             print('redirecting hacker for login...')
             # messages.add_message(request, messages.ERROR, f"Error: Please login to the App!")
-            return redirect('logReg:index')
+            return redirect('usuarios:index')
         else:
             return render(request, "login_registration/success.html")
 
@@ -53,7 +53,7 @@ def login(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('logReg:index')
+            return redirect('usuarios:index')
         else:
             # ver si el nombre de usuario proporcionado existe en la base de datos
             user = User.objects.filter(email=request.POST['email']) # ¿Por qué usamos el filtro aquí en lugar de get?
@@ -76,14 +76,14 @@ def login(request):
                     return redirect('quotes_app:dashboard')
             # si no encontramos nada en la base de datos buscando por nombre de usuario o si las contraseñas no coinciden, 
             # redirigir a una ruta segura
-            return redirect('logReg:index')
+            return redirect('usuarios:index')
 
 def logout(request):
     for key in request.session.keys(): # Imprimimos todas las claves de la session antes de borrar
         print("session key: ",key)
         print("session key type(): ",type(key))
     request.session.clear() # borramos todas las claves de la session
-    return redirect("logReg:index") # go to root: "/"
+    return redirect("usuarios:index") # go to root: "/"
 
 def verificar_email(request):
     if request.method == "POST":

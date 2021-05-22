@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %} {{titulo}} {% endblock %}</title>
+  {% load static %}
+  {% block favicon %}
+      <link rel="shortcut icon" href="{% static 'master/img/favicon.ico' %}">
+  {% endblock %}
+
+  {# Block where global CSS will go. #}
+  {% block styles %}
+    <link rel="stylesheet" type="text/css" href="master/css/style.css">
+    <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    {# Bootstrap from https://getbootstrap.com #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+  {% endblock %}
+
+  {# Additional CSS - specific to certain pages #}
+  {% block extrastyles%}
+  {% endblock %}
+
+  {# Scripts loaded from master #}
+  {% block scripts %}
+    <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="master/js/formValidation.js"></script>
+  {% endblock %}
+
+  {# Additional JavaScript - specific to certain pages #}
+  {% block extrascripts %}
+  {% endblock %}
+
+  
+</head>
+<body>
+  {# El contenido principal va en este bloque #}
+  {% block contenido %}
+  <h1>Hola Mundo!</h1>
+  {% endblock %}
+</body>
+</html>
