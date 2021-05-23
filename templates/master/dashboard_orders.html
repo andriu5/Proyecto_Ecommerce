@@ -5,17 +5,17 @@
 {% block admin_orders %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <span><img src="" alt=""><a class="navbar-brand active" href="#">Ecommerce</a></span>
+    <span><img src="" alt=""><a class="navbar-brand active" href="administrador:ordenes">Dashboard</a></span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="d-flex nav-item">
-          <a class="nav-link" href="administrador:admin_orders">Orden</a>
+          <a class="nav-link" href="administrador:ordenes">Orden</a>
         </li>
         <li class="d-flex nav-item">
-          <a class="nav-link" href="#">Productos</a>
+          <a class="nav-link" href="administrador:productos">Productos</a>
         </li>
       </ul>
       <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
@@ -91,6 +91,16 @@
           {% endfor %}
         </tbody>
       </table>
+    </div>
+    <br><br>
+    <div class='pagitation'>
+      <p class="page-pointer">{{todasLasOrdenes}}</p>
+      {% if todasLasOrdenes.has_previous %}
+      <a href="{% url 'administrador:dashboard' todasLasOrdenes.previous_page_number %}">&laquo;Previous Page</a>
+      {% endif %}
+      {% if todasLasOrdenes.has_next %}
+      <a href="{% url 'administrador:dashboard' todasLasOrdenes.next_page_number %}">Next Page&raquo;</a>
+      {% endif %}
     </div>
   </div>
 </div>

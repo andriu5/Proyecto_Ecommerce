@@ -87,3 +87,15 @@ span#productsCount {
 .usarioRegistrado-color {
     color: blue;
 }
+
+.pagenumbers{
+    margin-top:45px;
+}
+.pagination{
+    margin-top:45px;
+    display: inline-block;
+    text-align: center;
+}
+p.page-pointer {
+    margin-bottom: 0;
+}
