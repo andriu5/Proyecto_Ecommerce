@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.repartidores',
     'apps.tienda',
     'apps.master',
+    'apps.productos',
     'apps.administrador',
     'django.contrib.admin',
     'django.contrib.auth',

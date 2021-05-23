@@ -40,6 +40,12 @@ p {
     list-style-type: none;
 }
 
+.btn-border {
+    display: inline;
+    vertical-align: top;
+    position: relative;
+    top:-6px;
+}
 .btn-border, .btn-border-color {
     border: 1px solid black;
 }

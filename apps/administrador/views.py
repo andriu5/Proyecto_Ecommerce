@@ -296,9 +296,3 @@ def dashboard(request, page):
             "todasLasOrdenes": page,
             }
         return render(request, "master/dashboard_orders.html", context)
-
-def admin_productos(request):
-    #tener cuidado con la seguridad de la pagina!
-    if 'admin_loggedin' in request.session and request.session['admin_loggedin'] == True:
-        pass
-    pass

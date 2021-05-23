@@ -15,7 +15,7 @@
           <a class="nav-link" href="{% url 'administrador:ordenes' %}">Orden</a>
         </li>
         <li class="d-flex nav-item">
-          <a class="nav-link" href="{% url 'administrador:productos' %}">Productos</a>
+          <a class="nav-link" href="{% url 'productos:index' %}">Productos</a>
         </li>
       </ul>
       <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
@@ -24,69 +24,50 @@
 </nav>
 <div class="container">
   <div class="row">
-    <h2>aquí se va poder buscar ordenes por nombre de cliente, id, fecha, etc.</h2>
+    <h2>aquí se va poder buscar productos por nombre de cliente, id, fecha, etc.</h2>
     <br>
     {% if messages %}
     <div class="row">
-        <div class="col-12 alert alert-info">
-            <ul class="messages">
-                {% for message in messages %}
-                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+      <div class="col-12 alert alert-info">
+        <ul class="messages">
+          {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
     {% endif %}
-    <form action="#" method="POST" class="d-flex">
-      {% csrf_token %}
-      <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Buscar</button>
-    </form>
+    <div class="col-4">
+      <form action="#" method="POST" class="d-flex">
+        {% csrf_token %}
+        <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-2"><a href="productosNew#" class="btn btn-primary btn-border">Agregar Producto</a></div>
     <br>
     <div class="row">
       <table class="table table-hover table-ligth table-striped table-bordered">
         <thead class="thead-dark table-dark">
           <tr>
-            <th scope='col'>#ID-Orden</th>
-            <th scope='col'>Nombre Cliente</th>
-            <th scope='col'>Fecha</th>
-            <th scope='col'>Dirección de facturación</th>
-            <th scope='col'>Total</th>
-            <th scope='col'>Estado</th>
-            <th scope='col'>Actualizar Estado</th>
+            <th scope='col'>Imagen</th>
+            <th scope='col'>ID</th>
+            <th scope='col'>Nombre</th>
+            <th scope='col'>Cantidad en el Inventario</th>
+            <th scope='col'>Cantidad Vendidos</th>
+            <th scope='col'>Acción</th>
           </tr>
         </thead>
         <tbody>
-          {% for orden in todasLasOrdenes %}
+          {% for producto in todosLosProductos %}
           <tr>                    
-            <td><a href="#"><b>{{orden.id}}</b></a></td>
-            <td>{{orden.cliente.nombre}} {{orden.cliente.apellido}}</td>
-            <td>{{orden.created_at}}</td>
-            <td>{{orden.direccion_facturacion}} <br>{{orden.ciudad_facturacion}}, {{orden.pais_facturacion}} - {{orden.codigo_postal}}</td>
-            <td>${{orden.total}}</td>
-            <td>{{orden.estado}}</td>
-            <td>
-              {% if orden.estado != "Cancelada" and orden.estado != "Enviado" %}
-              <form action="#" method="POST">
-                {% csrf_token %}
-                <select name="newstatus" class="form-group" id="newstatus">
-                  <option value="in_transit">En Transito</option>
-                  <option value="delivered">Despachado</option>
-                  <option value="cancelled">Cancelado</option>                        
-                </select>
-                <input type="submit" value="Update" class='btn btn-success'>
-              </form>
-              {% else %}
-                {% if orden.estado == "Cancelada"%}
-                <span class="error">La orden {{orden.id}} fue cancelada</span><br>
-                <span class="error">@ {{orden.updated_at}}</span>
-                {% endif %}
-                {% if orden.estado == "Enviado" %}
-                <span class="success">La orden {{orden.id}} fue despachada</span><br>
-                <span class="success">@ {{orden.updated_at}}</span>
-                {% endif %}
-              {% endif %}
-            </td>
+            <td><img src="media/apple.jpg" alt="Foto producto {{producto.id}}"></td>
+            <td><a href="#"><b>{{producto.id}}</b></a></td>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.cantidad_inventario}}</td>
+            <td>{{producto.cantidad_vendido}}</td>
+            <td><a href="#">Editar</a> | <a href="#">Eliminar</a></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -94,12 +75,12 @@
     </div>
     <br><br>
     <div class='pagitation'>
-      <p class="page-pointer">{{todasLasOrdenes}}</p>
-      {% if todasLasOrdenes.has_previous %}
-      <a href="{% url 'administrador:dashboard' todasLasOrdenes.previous_page_number %}">&laquo;Previous Page</a>
+      <p class="page-pointer">{{todosLosProductos}}</p>
+      {% if todosLosProductos.has_previous %}
+      <a href="{% url 'productos:dashboard' todosLosProductos.previous_page_number %}">&laquo;Previous Page</a>
       {% endif %}
-      {% if todasLasOrdenes.has_next %}
-      <a href="{% url 'administrador:dashboard' todasLasOrdenes.next_page_number %}">Next Page&raquo;</a>
+      {% if todosLosProductos.has_next %}
+      <a href="{% url 'productos:dashboard' todosLosProductos.next_page_number %}">Next Page&raquo;</a>
       {% endif %}
     </div>
   </div>
