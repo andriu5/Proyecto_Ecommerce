@@ -1,35 +1,97 @@
 {% extends 'master/base.html' %}
 {% load static %}
 
-{% block titulo %}Página de Administracion de Productos{% endblock %}
-{% block contenido %}
+{% block titulo %}  Admin Orders {% endblock %}
+{% block admin_orders %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand active" href="{% url 'crypto:crypto_home' %}">Ecommerce</a>
-    <button class="navbar-toggler fa fa-fw fa-home" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span><img src="" alt=""><a class="navbar-brand active" href="#">Ecommerce</a></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'crypto:about' %}">About</a>
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="administrador:admin_orders">Orden</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'crypto:crypto_prices' %}">Prices</a>
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="#">Productos</a>
         </li>
       </ul>
-      <form action="{% url 'crypto:crypto_prices' %}" method="POST" class="d-flex">
-        {% csrf_token %}
-        <input class="form-control me-2" name="quote" type="search" placeholder="Get Currency Quote" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
     </div>
   </div>
 </nav>
 <div class="container">
   <div class="row">
-    <h2>aquí van los poductos que ven los administradores de la tienda</h2>
+    <h2>aquí se va poder buscar ordenes por nombre de cliente, id, fecha, etc.</h2>
+    <br>
+    {% if messages %}
+    <div class="row">
+        <div class="col-12 alert alert-info">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <form action="#" method="POST" class="d-flex">
+      {% csrf_token %}
+      <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+    <br>
+    <div class="row">
+      <table class="table table-hover table-ligth table-striped table-bordered">
+        <thead class="thead-dark table-dark">
+          <tr>
+            <th scope='col'>#ID-Orden</th>
+            <th scope='col'>Nombre Cliente</th>
+            <th scope='col'>Fecha</th>
+            <th scope='col'>Dirección de facturación</th>
+            <th scope='col'>Total</th>
+            <th scope='col'>Estado</th>
+            <th scope='col'>Actualizar Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for orden in todasLasOrdenes %}
+          <tr>                    
+            <td><a href="#"><b>{{orden.id}}</b></a></td>
+            <td>{{orden.cliente.nombre}} {{orden.cliente.apellido}}</td>
+            <td>{{orden.created_at}}</td>
+            <td>{{orden.direccion_facturacion}} <br>{{orden.ciudad_facturacion}}, {{orden.pais_facturacion}} - {{orden.codigo_postal}}</td>
+            <td>${{orden.total}}</td>
+            <td>{{orden.estado}}</td>
+            <td>
+              {% if orden.estado != "Cancelada" and orden.estado != "Enviado" %}
+              <form action="#" method="POST">
+                {% csrf_token %}
+                <select name="newstatus" class="form-group" id="newstatus">
+                  <option value="in_transit">En Transito</option>
+                  <option value="delivered">Despachado</option>
+                  <option value="cancelled">Cancelado</option>                        
+                </select>
+                <input type="submit" value="Update" class='btn btn-success'>
+              </form>
+              {% else %}
+                {% if orden.estado == "Cancelada"%}
+                <span class="error">La orden {{orden.id}} fue cancelada</span><br>
+                <span class="error">@ {{orden.updated_at}}</span>
+                {% endif %}
+                {% if orden.estado == "Enviado" %}
+                <span class="success">La orden {{orden.id}} fue despachada</span><br>
+                <span class="success">@ {{orden.updated_at}}</span>
+                {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-
 {% endblock %}

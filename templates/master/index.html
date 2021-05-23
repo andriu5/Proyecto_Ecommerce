@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="d-flex nav-item">
-          <a class="nav-link" href="#">Inicia sesión</a>
+          <a class="nav-link" href="/usuarios/">Inicia sesión</a>
         </li>
       </ul>
-      <a class="d-flex nav-link link-light" href="#">Cerrar Sesión</a>
+      <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
       <a class="d-flex nav-link link-light" href="#">
         <img id="shoppingCart" src="{% static 'master/img/shopping_cart.png' %}" alt="Icono Carrito de Compras">
         <span id="productsCount">1</span>
@@ -24,7 +24,17 @@
 </nav>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3"  style="border: 1px solid black;">
+      <h5 class="usarioRegistrado-color">Bienvenido a la tienda {{request.session.user.name}}!</h5>
+      <div class="col-3"  style="border: 1px solid black;">
+        {% if messages %}
+        {% for message in messages %}
+        <div id="info" class="alert alert-warning">
+          <button type="button" class="close btn1" data-dismiss="alert"><small><sup>x</sup></small></button>
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+      <br>
       <h2>el formulario product name</h2>
       <br>
       <h3>lista de categorias</h3>

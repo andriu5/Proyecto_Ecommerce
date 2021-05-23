@@ -9,7 +9,7 @@ from django.http import JsonResponse
 # Create your views here.
 def index(request):
     if request.method == "GET":
-        return render(request, "login_registration/index.html")
+        return render(request, "master/usuarios.html")
 
 def register(request):
     if request.POST['logReg'] == 'register':
@@ -45,7 +45,7 @@ def success(request):
             # messages.add_message(request, messages.ERROR, f"Error: Please login to the App!")
             return redirect('usuarios:index')
         else:
-            return render(request, "login_registration/success.html")
+            return render(request, "master/success.html")
 
 def login(request):
     if request.POST['logReg'] == 'login':
@@ -73,7 +73,7 @@ def login(request):
                     request.session['user_id'] = logged_user.id
                     # ¡Nunca renderices en una publicación, siempre redirigir!
                     #messages.success(request,"Successfully logged in!")
-                    return redirect('quotes_app:dashboard')
+                    return redirect('index')
             # si no encontramos nada en la base de datos buscando por nombre de usuario o si las contraseñas no coinciden, 
             # redirigir a una ruta segura
             return redirect('usuarios:index')
@@ -83,7 +83,8 @@ def logout(request):
         print("session key: ",key)
         print("session key type(): ",type(key))
     request.session.clear() # borramos todas las claves de la session
-    return redirect("usuarios:index") # go to root: "/"
+    #return redirect("usuarios:index") # go to root: "/"
+    return redirect("usuarios")
 
 def verificar_email(request):
     if request.method == "POST":
