@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class LogregConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
     name = 'logReg'

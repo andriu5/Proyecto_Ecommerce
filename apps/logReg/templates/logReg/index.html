@@ -1,0 +1,9 @@
+{%extends 'logReg/base.html'%}
+
+{%block content%}
+  {% if user.is_authenticated %}
+    <h1 style="color: white; padding: 10px;">Bienvenido(a) {{user}}</h1>
+  {%else%}
+  <h1 style="color: white; padding: 10px;">Bienvenido(a) a la aplicación eCommerceSaga</h1>
+  {%endif%}
+{%endblock%}
