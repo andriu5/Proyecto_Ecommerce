@@ -105,3 +105,8 @@ span#productsCount {
 p.page-pointer {
     margin-bottom: 0;
 }
+
+.admin_img{
+    height:100px;
+    width:100px;
+}

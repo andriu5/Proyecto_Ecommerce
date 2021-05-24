@@ -120,7 +120,7 @@ def admin_ordenes(request):
         page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
         
         context={
-            # 'all_orders': Order.objects.all()
+            # 'todasLasOrdenes': Ordenes.objects.all()
             #"todasLasOrdenes": ordenes
             "todasLasOrdenes": page
             }

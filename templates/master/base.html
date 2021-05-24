@@ -31,6 +31,13 @@
 
   {# Additional JavaScript - specific to certain pages #}
   {% block extrascripts %}
+  <script type="text/javascript">
+    function abrir_modal_edicion(url){ 
+      $("#edicion").load(url, function(){
+        $(this).modal('show');
+      });
+    }
+  </script>
   {% endblock %}
 
   

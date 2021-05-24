@@ -1,0 +1,216 @@
+{% extends 'master/base.html' %}
+{% load static %}
+
+{% block titulo %} Administración de Productos {% endblock %}
+{% block admin_productos %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span><img src="" alt=""><a class="navbar-brand active" href="administrador:ordenes">Dashboard</a></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="{% url 'administrador:ordenes' %}">Orden</a>
+        </li>
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="{% url 'productos:index' %}">Productos</a>
+        </li>
+      </ul>
+      <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <h2>aquí se va poder buscar productos por nombre de cliente, id, fecha, etc.</h2>
+    <br>
+    {% if messages %}
+    <div class="row">
+      <div class="col-12 alert alert-info">
+        <ul class="messages">
+          {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+    <div class="col-4">
+      <form action="#" method="POST" class="d-flex">
+        {% csrf_token %}
+        <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-6"></div>
+    <!-- <div class="col-2"><a href="{% url 'productos:add_prod' %}" class="btn btn-primary btn-border">Agregar Producto</a></div> -->
+    <div class="col-2"><a href="#" data-toggle='modal' data-target='#add-modal' class="btn btn-primary btn-border">Agregar Producto</a></div>
+    <br>
+    <div class="row">
+      <table class="table table-hover table-ligth table-striped table-bordered">
+        <thead class="thead-dark table-dark">
+          <tr>
+            <th scope='col'>Imagen</th>
+            <th scope='col'>ID</th>
+            <th scope='col'>Nombre</th>
+            <th scope='col'>Cantidad en el Inventario</th>
+            <th scope='col'>Cantidad Vendidos</th>
+            <th scope='col'>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for producto in todosLosProductos %}
+          <tr>
+            {% if producto.imagen %}                    
+            <td><img class='admin_img' src="{{producto.imagen.url}}" alt='{{producto.nombre}}'></td>
+            {% else %}
+            <td><img class='admin_img' src="/media/apple.png" alt='Imagen predetermninada'></td>
+            {% endif %}
+            <td><a href="#"><b>{{producto.id}}</b></a></td>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.cantidad_inventario}}</td>
+            <td>{{producto.cantidad_vendido}}</td>
+            <td>
+              <a href="{% url 'productos:delete_prod' producto.id %}" class="btn btn-danger">Eliminar</a>
+              <a href="{% url 'productos:edit_prod' producto.id  %}" class="btn btn-primary">Editar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class='pagitation'>
+      <p class="page-pointer">{{todosLosProductos}}</p>
+      {% if todosLosProductos.has_previous %}
+      <a href="{% url 'productos:dashboard' todosLosProductos.previous_page_number %}">&laquo;Previous Page</a>
+      {% endif %}
+      {% if todosLosProductos.has_next %}
+      <a href="{% url 'productos:dashboard' todosLosProductos.next_page_number %}">Next Page&raquo;</a>
+      {% endif %}
+    </div>
+    <br>
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="Login">Editar Producto - ID</h4>
+          </div>
+          <div class="modal-body">
+          <form action="{% url 'productos:add_prod' %}" method="POST" enctype="multipart/form-data" id="editprod">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for='editname'>Nombre</label>
+              <input type="text" name='editname' class="form-control" id="editname" placeholder="name">
+            </div>
+            <div class="form-group">
+              <label for='editdesc'>Descripción</label>
+              <textarea name='editdesc' id='editdesc' class='form-control' rows='4' placeholder='description'></textarea>
+            </div>
+            <div class="form-group">
+              <label for='editprice'>Precio</label>
+              <input type="text" name='editprice' id='editprice' class='form-control' placeholder='price'>
+            </div>
+            <div class="form-group">
+              <label for='editcat'>Categorías</label>
+              <select name='editcat' id='editcat' class='form-control' rows='3'>
+              {% for cat in cats %}
+                <option value='{{cat}}'>{{cat|title}}</option>
+              {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for='newcat'>Agregar nueva categoría</label>
+              <input type='text' name='newcat' id='newcat' placeholder='new category' class='form-control'>
+            </div>
+            <div class="form-group">
+              <label for="editinv">Inventario</label>
+              <input type='text' name='editinv' id='editinv' placeholder='Inventory' class='form-control' rows='3'>
+            </div>
+            <div class="form-group">
+              <label for='newimg'>Subir Imagen</label>
+              <input type="file" name='newimg' id="newimg">
+            </div>
+            <div class='modal-footer'>
+              <div id='editer'>
+                <button class='btn btn-info form-inline' data-dismiss='modal'>Cancel</button>
+                <button class='btn btn-primary' type='submit'>Update</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="Login">Agregar un nuevo producto</h4>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'productos:add_prod' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for='addname'>Nombre</label>
+                <input type="text" name='addname' class="form-control" id="addname" placeholder="name">
+              </div>
+              <div class="form-group">
+                <label for='adddesc'>Descripción</label>
+                <textarea name='adddesc' id='adddesc' class='form-control' rows='3' placeholder='description'></textarea>
+              </div>
+              <div class="form-group">
+                <label for='addcat'>Categorías</label>
+                <select name='addcat' id='addcat' class='form-control' rows='3'>
+                {% for cat in cats %}
+                  <option value='{{cat}}'>{{cat|title}}</option>
+                {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for='addnewcat'>Agregar nueva categoría</label>
+                <input type='text' name='addnewcat' id='addnewcat' placeholder='new category' class='form-control'>
+              </div>
+              <div class="form-group">
+                <label for="addprice">Precio</label>
+                <input type="text" name="addprice" id="addprice" class="form-control" rows="3">
+              </div>
+              <div class="form-group">
+                <label for='newimg'>Subir imagen</label>
+                <input type="file" name='newimg' id="newimg">
+              </div>
+              <div class='modal-footer'>
+                <div id='editer'>
+                  <button class='btn btn-info form-inline' data-dismiss='modal'>Cancelar</button>
+                  <button class='btn btn-primary' type='submit'>Agregar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+    </div>
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="Delete">¿Estás seguro de que desea eliminar producto?</h4>
+              </div>
+              <div class="modal-footer">
+                <div id='deleter'>
+                  <button class='btn btn-info form-inline' data-dismiss='modal'>Cancelar</button>
+                  <form action="#" method="post" id="deleteprod">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type='submit'>Eliminar</button>
+                  </form>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
