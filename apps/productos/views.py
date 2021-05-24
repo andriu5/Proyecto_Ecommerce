@@ -5,6 +5,7 @@ from apps.logReg.models import User
 from .models import Producto
 import bcrypt
 from django.core.paginator import EmptyPage, Paginator
+from django.core.files.storage import FileSystemStorage
 
 productos = [
     {
@@ -100,7 +101,7 @@ def index(request):
         p = Paginator(productos, 4)
         page_num = request.GET.get('/productos/dashboard/<int:page>/', 1)
         page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
-        currentUserID = request.session['admin_id']
+        currentUserID = request.session['admin']['id']
         context = {
             # "todosLosProductos" : productos,
             "todosLosProductos" : page,
@@ -162,17 +163,23 @@ def add_producto(request):
                 messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
                 return redirect('productos:index')
             else:
-                nuevo_producto = Producto.objects.create(
-                    nombre = request.POST['nombre'],
-                    precio = request.POST['precio'],
-                    categoria = request.POST['categoria'],
-                    inventario = request.POST['inventario'],
-                    descripcion = request.POST['descripcion'],
-                    imagen = request.POST['imagen'],
-                    uploaded_by = User.objects.get(id=request.session['user']['id'])
-                    )
-                print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
-                return redirect('productos:index')
+                if request.method == "POST":
+                    archivoCargado=request.POST['imagen']
+                    adminID = request.session['admin_id']
+                    fileSS = FileSystemStorage("media/"+adminID)
+                    fileSS.save(archivoCargado.name, archivoCargado)
+                    print("Tamaño del Archivo:", archivoCargado)
+                    nuevo_producto = Producto.objects.create(
+                        nombre = request.POST['nombre'],
+                        precio = request.POST['precio'],
+                        categoria = request.POST['categoria'],
+                        inventario = request.POST['inventario'],
+                        descripcion = request.POST['descripcion'],
+                        imagen = request.POST['imagen'],
+                        uploaded_by = User.objects.get(id=request.session['user']['id'])
+                        )
+                    print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
+                    return redirect('productos:index')
             return redirect('administrador:index')
 
 def edit_producto(request, id):
@@ -187,8 +194,10 @@ def update_producto(request, id):
 def delete_producto(request):
     pass
 
+#no se si lo use, solo estoy siguiendo el ejemplo de David!
 def uploadFile(request):
     if request.method == "POST":
         userID = 2
         nivel_usuario = 2
         archivoCargado = request.FILES["archivo"]
+        pass

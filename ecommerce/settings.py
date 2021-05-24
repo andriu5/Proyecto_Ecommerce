@@ -141,3 +141,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# Esto nos permite guardar los archivos!
+# Lineas obligatorias para subir imagenes a media:
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# si no existe media, Django la va crear, si existe la toma:
+MEDIA_URL = "/media/"

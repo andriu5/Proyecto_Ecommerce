@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.master.urls')),
@@ -23,3 +26,6 @@ urlpatterns = [
     path('productos/', include('apps.productos.urls')),
     path('administrador/', include('apps.administrador.urls')),
 ]
+
+#Generamos las muestras y poder ver los archivos que temnemos guardados!
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

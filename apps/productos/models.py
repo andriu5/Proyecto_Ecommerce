@@ -9,9 +9,9 @@ class ProductoManager(models.Manager):
             errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
         if len(postData['descripcion']) < 10 or not postData['descripcion'][0].isalpha():
             errores['descripcion'] = "Error: La descripción del producto debe ser de al menos 10 caracteres."
-        if float(postData['precio']) > 0:
+        if float(postData['precio']) < 0:
             errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
-        if len(postData['nueva_categoria']) < 2 or not postData['nueva_categoria'][0].isalpha():
+        if len(postData['categoria']) < 2 or not postData['categoria'][0].isalpha():
             errores['categoria_corta'] = "Error: El nombre de la categoría debe ser de al menos 2 caracteres."
         # validar si la imagen fue ingresada en la base datos!
         return errores
