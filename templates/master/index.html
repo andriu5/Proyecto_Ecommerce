@@ -14,7 +14,7 @@
           <a class="nav-link" href="/usuarios/">Inicia sesión</a>
         </li>
       </ul>
-      <a class="d-flex nav-link link-light" href="/usuarios/logout/">Cerrar Sesión</a>
+      <a class="d-flex nav-link link-light" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a>
       <a class="d-flex nav-link link-light" href="#">
         <img id="shoppingCart" src="{% static 'master/img/shopping_cart.png' %}" alt="Icono Carrito de Compras">
         <span id="productsCount">1</span>

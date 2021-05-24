@@ -83,8 +83,7 @@ def logout(request):
         print("session key: ",key)
         print("session key type(): ",type(key))
     request.session.clear() # borramos todas las claves de la session
-    #return redirect("usuarios:index") # go to root: "/"
-    return redirect("usuarios")
+    return redirect("/")
 
 def verificar_email(request):
     if request.method == "POST":
