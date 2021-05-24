@@ -298,3 +298,14 @@ def dashboard(request, page):
             "user": User.objects.get(id=currentUserID).first_name
             }
         return render(request, "master/dashboard_orders.html", context)
+
+def cerrar_sesion(request): #alvear: Debemos hacer el cierre de la session del usuario!
+    print('*'*100)
+    print(f'Cerrando sesion de administrador y redirijiendolo al login...')
+    if 'admin' in request.session.keys():
+        print('Current admin ID:', request.session['admin']['id'])
+        print('Current admin Name:', request.session['admin']['nombre'])
+        print('Current admin Last Name:', request.session['admin']['apellido'])
+        request.session.clear() # borramos todas las claves de la session
+        print('*'*100)
+    return redirect("administrador:index") # go to root: "/"

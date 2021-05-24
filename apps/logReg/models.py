@@ -38,15 +38,18 @@ class UserManager(models.Manager):
             errors['password'] = "Password no coincide con la base de datos!"
         return errors
     def log_admin_validation(self, postData):
-        errors = {}
+        errores = {}
         try:
             user = User.objects.get(email = postData['email'])
         except:
-            errors['email'] = f"Dirección de Email {postData['email']} no esta registrado en la base de datos!"
-            return errors
+            errores['email'] = f"Dirección de Email {postData['email']} no registrada en la base de datos!"
+            return errores
+        if User.objects.get(email = postData['email']).nivel_usuario != 2:
+            errores['nivel_usuario'] = "Permiso denegado al sitio de administración de la tienda."
+            return errores
         if not bcrypt.checkpw(postData['password'].encode(), user.password.encode()):
-            errors['password'] = "Password no coincide con la base de datos!"
-        return errors
+            errores['password'] = "Password no coincide con la base de datos!"
+        return errores
 
 class User(models.Model):
     nombre = models.CharField(max_length=255)
