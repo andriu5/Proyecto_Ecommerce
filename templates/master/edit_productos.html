@@ -1,0 +1,58 @@
+{% extends 'master/base.html' %}
+{% load static %}
+
+{% block titulo %} Editar Productos {% endblock %}
+{% block edit_productos %}
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="Login">Editar Producto - ID</h4>
+        </div>
+        <div class="modal-body">
+        <form action="{% url 'productos:add_prod' %}" method="POST" enctype="multipart/form-data" id="editprod">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for='editname'>Nombre</label>
+            <input type="text" name='editname' class="form-control" id="editname" placeholder="name">
+          </div>
+          <div class="form-group">
+            <label for='editdesc'>Descripción</label>
+            <textarea name='editdesc' id='editdesc' class='form-control' rows='4' placeholder='description'></textarea>
+          </div>
+          <div class="form-group">
+            <label for='editprice'>Precio</label>
+            <input type="text" name='editprice' id='editprice' class='form-control' placeholder='price'>
+          </div>
+          <div class="form-group">
+            <label for='editcat'>Categorías</label>
+            <select name='editcat' id='editcat' class='form-control' rows='3'>
+            {% for cat in cats %}
+              <option value='{{cat}}'>{{cat|title}}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for='newcat'>Agregar nueva categoría</label>
+            <input type='text' name='newcat' id='newcat' placeholder='new category' class='form-control'>
+          </div>
+          <div class="form-group">
+            <label for="editinv">Inventario</label>
+            <input type='text' name='editinv' id='editinv' placeholder='Inventory' class='form-control' rows='3'>
+          </div>
+          <div class="form-group">
+            <label for='newimg'>Subir Imagen</label>
+            <input type="file" name='newimg' id="newimg">
+          </div>
+          <div class='modal-footer'>
+            <div id='editer'>
+              <button class='btn btn-info form-inline' data-dismiss='modal'>Cancel</button>
+              <button class='btn btn-primary' type='submit'>Update</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

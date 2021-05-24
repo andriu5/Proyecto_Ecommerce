@@ -24,6 +24,7 @@
 </nav>
 <div class="container">
   <div class="row">
+    <h1>Hola {{user}}:</h1>
     <h2>aquí se va poder buscar ordenes por nombre de cliente, id, fecha, etc.</h2>
     <br>
     {% if messages %}
@@ -93,7 +94,7 @@
       </table>
     </div>
     <br><br>
-    <div class='pagitation'>
+    <div class='pagination'>
       <p class="page-pointer">{{todasLasOrdenes}}</p>
       {% if todasLasOrdenes.has_previous %}
       <a href="{% url 'administrador:dashboard' todasLasOrdenes.previous_page_number %}">&laquo;Previous Page</a>

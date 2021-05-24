@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from apps.logReg.models import User
+#from .models import Producto, Orden, OrdenItem
+from .models import Producto
 import bcrypt
 from django.core.paginator import EmptyPage, Paginator
 
@@ -98,10 +100,12 @@ def index(request):
         p = Paginator(productos, 4)
         page_num = request.GET.get('/productos/dashboard/<int:page>/', 1)
         page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
+        currentUserID = request.session['admin_id']
         context = {
             # "todosLosProductos" : productos,
             "todosLosProductos" : page,
-            "cats": ["Pantalones", "Poleras", "Cocina", "Frutas", "Verduras", "Zapatos", "Zapatillas", "Celulares", "Computacion", "Juegos de Video", "Libros"]
+            "cats": ["Pantalones", "Poleras", "Cocina", "Frutas", "Verduras", "Zapatos", "Zapatillas", "Celulares", "Computacion", "Juegos de Video", "Libros"],
+            "user": User.objects.get(id=currentUserID).nombre,
         }
         return render(request, "master/listar_productos.html", context)
 
@@ -130,7 +134,11 @@ def dashboard(request, page):
 
 def admin_productos(request):
     if 'admin_loggedin' in request.session and request.session['admin_loggedin'] == True:
-        pass
+        context = {
+            #"cats": ["Pantalones", "Poleras", "Cocina", "Frutas", "Verduras", "Zapatos", "Zapatillas", "Celulares", "Computacion", "Juegos de Video", "Libros"]
+            "productos": Producto.objects.all()
+        }
+        return render(request, "master/add_productos.html", context)
     request.session.clear()
     request.session['admin_bad_loggedin'] = True
     return redirect('administrador:index')
@@ -138,7 +146,34 @@ def admin_productos(request):
 def add_producto(request):
     print('*'*100)
     print('Agregando un nuevo Producto...')
-    pass
+    if 'admin' not in request.session.keys():
+        print('Cookie deleted by user! redirecting user for login...')
+        return redirect('administrador:index')
+    if 'admin' in request.session.keys():
+        #Validamos el formulario contra la base de datos
+        errors = Producto.objects.product_validation(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect('productos:index')
+        else:
+            #Validamos si la imagen del producto esta en la base de datos!
+            if Producto.objects.filter(imagen=request.POST['imagen']).exists():
+                messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
+                return redirect('productos:index')
+            else:
+                nuevo_producto = Producto.objects.create(
+                    nombre = request.POST['nombre'],
+                    precio = request.POST['precio'],
+                    categoria = request.POST['categoria'],
+                    inventario = request.POST['inventario'],
+                    descripcion = request.POST['descripcion'],
+                    imagen = request.POST['imagen'],
+                    uploaded_by = User.objects.get(id=request.session['user']['id'])
+                    )
+                print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
+                return redirect('productos:index')
+            return redirect('administrador:index')
 
 def edit_producto(request, id):
     print('*'*100)
@@ -151,3 +186,9 @@ def update_producto(request, id):
 
 def delete_producto(request):
     pass
+
+def uploadFile(request):
+    if request.method == "POST":
+        userID = 2
+        nivel_usuario = 2
+        archivoCargado = request.FILES["archivo"]

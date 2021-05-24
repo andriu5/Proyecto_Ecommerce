@@ -1,0 +1,25 @@
+{% extends 'master/base.html' %}
+{% load static %}
+
+{% block titulo %} Eliminar Productos {% endblock %}
+{% block delete_productos %}
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="Delete">¿Estás seguro de que desea eliminar producto?</h4>
+            </div>
+            <div class="modal-footer">
+              <div id='deleter'>
+                <button class='btn btn-info form-inline' data-dismiss='modal'>Cancelar</button>
+                <form action="#" method="post" id="deleteprod">
+                  {% csrf_token %}
+                  <button class="btn btn-danger" type='submit'>Eliminar</button>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  {% endblock %}

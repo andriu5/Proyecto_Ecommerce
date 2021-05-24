@@ -118,11 +118,12 @@ def admin_ordenes(request):
         p = Paginator(ordenes, 4)
         page_num = request.GET.get('dashboard/orders/<int:page>/', 1)
         page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
-        
+        currentUserID = request.session['admin_id']
         context={
             # 'todasLasOrdenes': Ordenes.objects.all()
             #"todasLasOrdenes": ordenes
-            "todasLasOrdenes": page
+            "todasLasOrdenes": page,
+            "user": User.objects.get(id=currentUserID).nombre
             }
         return render(request, "master/dashboard_orders.html", context)
     request.session.clear()
@@ -289,10 +290,11 @@ def dashboard(request, page):
             page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
         except EmptyPage:
             page = p.page(1)
-
+        currentUserID = request.session['admin']['id']
         context={
             # 'all_orders': Order.objects.all()
             #"todasLasOrdenes": ordenes
             "todasLasOrdenes": page,
+            "user": User.objects.get(id=currentUserID).first_name
             }
         return render(request, "master/dashboard_orders.html", context)
