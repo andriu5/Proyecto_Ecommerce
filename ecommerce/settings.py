@@ -142,6 +142,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+# si el usuario esta logeado lo deja acceder sino va a la ruta de LOGIN_URL
+LOGIN_URL = '/administrador/'
 # Esto nos permite guardar los archivos!
 # Lineas obligatorias para subir imagenes a media:
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

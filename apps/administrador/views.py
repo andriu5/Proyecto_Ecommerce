@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from apps.logReg.models import User
@@ -43,6 +44,8 @@ def login_admin(request):
             # redirigir a una ruta segura
             return redirect('administrador:index')
 
+
+#@login_required
 def admin_ordenes(request):
     #tener cuidado con la seguridad de la pagina!
     if 'admin' in request.session and request.session['admin_loggedin'] == True:
@@ -130,6 +133,7 @@ def admin_ordenes(request):
     request.session['admin_bad_loggedin'] = True
     return redirect('administrador:index')
 
+#@login_required
 def dashboard(request, page):
     #tener cuidado con la seguridad de la pagina!
     if 'admin' in request.session and request.session['admin_loggedin'] == True:

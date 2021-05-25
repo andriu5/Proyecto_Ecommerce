@@ -159,7 +159,7 @@ def add_producto(request):
             return redirect('productos:index')
         else:
             #Validamos si la imagen del producto esta en la base de datos!
-            if Producto.objects.filter(imagen=request.POST['imagen']).exists():
+            if Producto.objects.filter(imagen=request.FILES['imagen']).exists():
                 messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
                 return redirect('productos:index')
             else:
