@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
-from apps.logReg.models import User
-import bcrypt
+#from apps.logReg.models import User
+from django.contrib.auth.models import User
+#import bcrypt
 from time import gmtime, strftime, time, localtime
 from datetime import datetime
 from django.http import JsonResponse
@@ -14,38 +16,30 @@ def index(request):
         return render(request, "master/admin_login.html")
 
 def login_admin(request):
-    if request.POST['logAdmin'] == 'login':
-        errors = User.objects.log_admin_validation(request.POST)
-        if len(errors) > 0:
-            for key, value in errors.items():
-                messages.error(request, value)
-            return redirect('administrador:index')
-        else:
-            # ver si el nombre de usuario proporcionado existe en la base de datos
-            admin = User.objects.filter(email=request.POST['email']) # ¿Por qué usamos el filtro aquí en lugar de get?
-            if admin: # tenga en cuenta que aquí aprovechamos la veracidad: una lista vacía devolverá falso
-                logged_admin = admin[0] 
-                admin = User.objects.get(email = request.POST['email'])
-                request.session['admin'] = {
-                    'id': admin.id,
-                    'nombre': admin.nombre,
-                    'apellido': admin.apellido
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if request.user.is_authenticated:
+            print(True)
+        if user is not None and user.is_superuser:  # si el Usuario Existe!
+            # Redirect to a success page.
+            login(request, user)
+            messages.success(request, ('Usuario ha iniciado sesión correctamente!'))
+            request.session['admin'] = {
+                'id': user.id,
+                'name': user.first_name,
+                'lastname': user.last_name
                 }
-                # asumiendo tenemos un usuario con este nombre de usuario, éste sería el primero en la lista que obtenemos
-                # por supuesto, deberíamos tener cierta lógica para evitar duplicados de nombres cuando creamos usuarios
-                # usa el método check_password_hash de bcrypt, pasando el hash de nuestra base de datos y la contraseña del formulario
-                if bcrypt.checkpw(request.POST['password'].encode(), logged_admin.password.encode()):
-                # si obtenemos True después de validar la contraseña, podemos poner la identificación del usuario en la sesión
-                    request.session['admin_id'] = logged_admin.id
-                    request.session['admin_loggedin'] = True
-                    # ¡Nunca renderices en una publicación, siempre redirigir!
-                    return redirect('administrador:ordenes')
-            # si no encontramos nada en la base de datos buscando por nombre de usuario o si las contraseñas no coinciden, 
-            # redirigir a una ruta segura
+            request.session['admin_loggedin'] = True
+            return redirect('administrador:ordenes')
+        else:
+            # Return an 'invalid login' error message.
+            messages.success(request, ('Error en el inicio de sesión!'))
             return redirect('administrador:index')
 
-
-#@login_required
+@login_required
 def admin_ordenes(request):
     #tener cuidado con la seguridad de la pagina!
     if 'admin' in request.session and request.session['admin_loggedin'] == True:
@@ -121,19 +115,20 @@ def admin_ordenes(request):
         p = Paginator(ordenes, 4)
         page_num = request.GET.get('dashboard/orders/<int:page>/', 1)
         page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
-        currentUserID = request.session['admin_id']
+        currentUserID = request.session['admin']['id']
         context={
             # 'todasLasOrdenes': Ordenes.objects.all()
             #"todasLasOrdenes": ordenes
             "todasLasOrdenes": page,
-            "user": User.objects.get(id=currentUserID).nombre
+            "user": ""
             }
         return render(request, "master/dashboard_orders.html", context)
+    # asumiendo que este sistema de Django es muy seguro!
     request.session.clear()
     request.session['admin_bad_loggedin'] = True
     return redirect('administrador:index')
 
-#@login_required
+@login_required
 def dashboard(request, page):
     #tener cuidado con la seguridad de la pagina!
     if 'admin' in request.session and request.session['admin_loggedin'] == True:
@@ -303,13 +298,10 @@ def dashboard(request, page):
             }
         return render(request, "master/dashboard_orders.html", context)
 
-def cerrar_sesion(request): #alvear: Debemos hacer el cierre de la session del usuario!
+def cerrar_sesion(request):
     print('*'*100)
     print(f'Cerrando sesion de administrador y redirijiendolo al login...')
-    if 'admin' in request.session.keys():
-        print('Current admin ID:', request.session['admin']['id'])
-        print('Current admin Name:', request.session['admin']['nombre'])
-        print('Current admin Last Name:', request.session['admin']['apellido'])
-        request.session.clear() # borramos todas las claves de la session
-        print('*'*100)
+    logout(request)
+    # Redirect to a success page.
+    messages.success(request, ('Usted ha cerrado sesión!'))
     return redirect("administrador:index") # go to root: "/"

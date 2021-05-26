@@ -21,16 +21,16 @@
     <form id="form2" action="{% url 'administrador:login' %}" method="POST">
       {% csrf_token %}
       <div class="form-group row">
-        <label for="email-id2" class="col-sm-4 col-form-label">Email:</label>
+        <label for="email-id2" class="col-sm-4 col-form-label">Nombre de Usuario:</label>
         <div class="col-12 col-sm-6">
-          <input id="email-id2" placeholder="Enter Email" name="email" class="form-control inp-style" type="text" required>
+          <input id="email-id2" placeholder="Ingrese nombre de Usuario (username)" name="username" class="form-control inp-style" type="text" required>
         </div>
       </div>
       <br>
       <div class="form-group row">
-        <label for="password-id2" class="col-sm-4 col-form-label">Password:</label>
+        <label for="password-id2" class="col-sm-4 col-form-label">Contraseña:</label>
         <div class="col-12 col-sm-6">
-          <input id="password-id2" placeholder="Enter Password" name="password" class="form-control inp-style" type="password" required>
+          <input id="password-id2" placeholder="Ingrese contraseña" name="password" class="form-control inp-style" type="password" required>
         </div>
       </div>
       <br>

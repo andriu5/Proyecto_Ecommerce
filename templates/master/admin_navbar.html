@@ -1,0 +1,32 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block admin_navBar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span><img src="" alt=""><a class="navbar-brand active" href="administrador:ordenes">Dashboard</a></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="{% url 'administrador:ordenes' %}">Orden</a>
+        </li>
+        <li class="d-flex nav-item">
+          <a class="nav-link" href="{% url 'productos:index' %}">Productos</a>
+        </li>
+      </ul>
+      <a class="d-flex nav-link link-light" href="{% url 'administrador:cerrar_sesion' %}">Cerrar Sesión</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+{% if messages %}
+    {% for message in messages %}
+      <div id="info" class="alert alert-warning" role="alert">
+        <button class="close btn-outline-light" data-dismiss="alert"><small><sup>x</sup></small></button>
+        {{ message }}
+      </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

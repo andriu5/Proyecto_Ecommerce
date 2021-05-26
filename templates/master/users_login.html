@@ -1,0 +1,28 @@
+{% extends 'master/users_navbar.html' %}
+{% load static %}
+{% block titulo %} Iniciar Sesión {% endblock %}
+{% block acceso_usuarios %}
+<h2 class="text-center">Iniciar Sesión</h2>
+<br>
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="{% url 'usuarios:login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <input name="username" type="text" placeholder="Ingrese nombre de Usuario" class="form-control" >
+    </div>
+    <div class="mb-3">
+      <input name="password" type="password" class="form-control" placeholder="Ingrese contraseña">
+      <a class="text-darkyellow form-text text-muted" href="{% url 'usuarios:change_password' %}"><small>¿olvido su contraseña?</small></a>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" class="btn btn-secondary">Acceder</button>
+        </div>
+        <div class="col-6">
+            <a class="btn btn-primary" href="{% url 'usuarios:register' %}">Registrate</a>
+            <p class="text-darkyellow form-text text-muted"><small>¿No tiene una cuenta?</small></p>
+        </div>
+    </div>
+  </form>
+</div>
+{%endblock%}

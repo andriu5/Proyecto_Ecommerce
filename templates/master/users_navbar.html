@@ -1,0 +1,38 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block users_navBar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span><img src="" alt=""><a class="navbar-brand active" href="/">Ecommerce App</a></span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="d-flex nav-item">
+            {#aqui puede ir un link#}
+          </li>
+        </ul>
+        {% if request.user.is_authenticated %}
+        <a class="d-flex ml-auto nav-link link-light" href="{% url 'usuarios:edit_profile' %}">Editar perfil</a>
+        <a class="d-flex ml-auto nav-link link-light" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a>          
+        {% else %}
+        <a class="d-flex ml-auto nav-link link-light" href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
+        {% endif %}
+        <a class="d-flex nav-link link-light" href="#">
+          <img id="shoppingCart" src="{% static 'master/img/shopping_cart.png' %}" alt="Icono Carrito de Compras">
+          <span id="productsCount">1</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <div id="info" class="alert alert-warning" role="alert">
+          <button class="close btn-outline-light" data-dismiss="alert"><small><sup>x</sup></small></button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+{% endblock %}

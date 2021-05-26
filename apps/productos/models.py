@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
-from apps.logReg.models import User
+# from apps.logReg.models import User
+from django.contrib.auth.models import User
 
 class ProductoManager(models.Manager):
     def product_validation(self, postData):
