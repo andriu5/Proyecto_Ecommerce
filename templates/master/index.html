@@ -1,11 +1,19 @@
 {% extends 'master/base.html' %}
 {% load static %}
-{% block head_title %} Página de la tienda {% endblock %}
+{% block titulo %} Página de la tienda {% endblock %}
 {% block content %}
-<div class="site-blocks-cover" styles="background-image: url({% static 'images/hero.jpg' %});" data-aos="fade">
+<div class="site-blocks-cover" style="background-image: url('{% static 'images/hero.jpg' %}');" data-aos="fade">
   <div class="container">
     <div class="row">
-        <h5 class="usarioRegistrado-color col-md-4 pt-5 pt-md-0">Bienvenido a la tienda {{request.session.user.name}}!</h5>
+      <div class="col-3"  style="border: 1px solid grey; background-color: white;">
+        <br>
+        <h2>el formulario product name</h2>
+        <br>
+        <h3>lista de categorias</h3>
+      </div>
+      <div class="col-9"  style="border: 1px solid grey; background-color: white;">
+        <h2>aquí van los poductos</h2>
+      </div>
     </div>
   </div>
 </div>

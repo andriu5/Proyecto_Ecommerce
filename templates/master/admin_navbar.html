@@ -1,4 +1,4 @@
-{% extends 'master/base.html' %}
+{% extends 'master/base_admin.html' %}
 {% load static %}
 {% block admin_navBar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,11 +22,14 @@
 </nav>
 <div class="container">
 {% if messages %}
-    {% for message in messages %}
-      <div id="info" class="alert alert-warning" role="alert">
-        <button class="close btn-outline-light" data-dismiss="alert"><small><sup>x</sup></small></button>
-        {{ message }}
-      </div>
-    {% endfor %}
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+    <span class="alert-inner--text">{{ message }}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
 {% endif %}
 {% endblock %}
