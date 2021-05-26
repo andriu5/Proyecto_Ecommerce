@@ -113,4 +113,8 @@ p.page-pointer {
 .errorlist{
     color: red;
 }
+
+/* .backgroundImage {
+    background-image: url({% static 'images/hero.jpg' %});
+} */
 /* Estilos de Victor para Usuarios*/
