@@ -120,7 +120,7 @@ def admin_ordenes(request):
             # 'todasLasOrdenes': Ordenes.objects.all()
             #"todasLasOrdenes": ordenes
             "todasLasOrdenes": page,
-            "user": ""
+            "user": User.objects.get(id=currentUserID).first_name
             }
         return render(request, "master/dashboard_orders.html", context)
     # asumiendo que este sistema de Django es muy seguro!
@@ -301,7 +301,8 @@ def dashboard(request, page):
 def cerrar_sesion(request):
     print('*'*100)
     print(f'Cerrando sesion de administrador y redirijiendolo al login...')
-    logout(request)
+    logout(request)  # Ojo que esto sirve solo como la contraparte de django.contrib.auth.login(), asi que lo usuarios que usaron el metodo anterior para acceder a la aplicacion tienen la opcion de hacer: django.contrib.auth.logout()
     # Redirect to a success page.
+    request.session.clear() # borramos todas las claves de la session (La vieja confiable!)
     messages.success(request, ('Usted ha cerrado sesión!'))
     return redirect("administrador:index") # go to root: "/"

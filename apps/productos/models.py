@@ -6,13 +6,22 @@ from django.contrib.auth.models import User
 class ProductoManager(models.Manager):
     def product_validation(self, postData):
         errores = {}
-        if len(postData['nombre']) < 2 or not postData['nombre'][0].isalpha():
+        try:
+            print(postData['nombre'].isalpha())
+            if len(postData['nombre']) < 2 or not postData['nombre'].isalpha():
+                errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
+        except Exception as e:
+            print(postData['nombre'][0].isalpha())
+            print(postData['nombre'].isalpha())
             errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
-        if len(postData['descripcion']) < 10 or not postData['descripcion'][0].isalpha():
+        if len(postData['descripcion']) < 10 or not postData['descripcion'].isalpha():
             errores['descripcion'] = "Error: La descripción del producto debe ser de al menos 10 caracteres."
-        if float(postData['precio']) < 0:
+        try:
+            if float(postData['precio']) < 0 and not postData['precio'].isalpha():
+                errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
+        except Exception as e:
             errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
-        if len(postData['categoria']) < 2 or not postData['categoria'][0].isalpha():
+        if len(postData['categoria']) < 2 or not postData['categoria'].isalpha():
             errores['categoria_corta'] = "Error: El nombre de la categoría debe ser de al menos 2 caracteres."
         # validar si la imagen fue ingresada en la base datos!
         return errores
@@ -24,15 +33,10 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     cantidad_vendida=models.PositiveIntegerField(default=0)
     precio=models.PositiveIntegerField(default=0)
-    CATEGORIA = (
-        ('1','Categoria 1')
-        ('2','Categoria 2')
-        ('3','Categoria 3')
-    )
-    categoria=models.CharField(max_length=1,choices=CATEGORIA,default='1')
+    categoria=models.CharField(max_length=255)
     inventario=models.PositiveIntegerField(default=0)
     descripcion=models.TextField()
-    imagen = models.ImageField(upload_to='productos', default='none.jpg', null=True)
+    imagen = models.ImageField(upload_to='productos', null=True)
     uploaded_by = models.ForeignKey(User, related_name="producto_uploaded", on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)

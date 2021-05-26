@@ -1,28 +1,8 @@
-{% extends 'master/base.html' %}
+{% extends 'master/admin_navbar.html' %}
 {% load static %}
 
 {% block titulo %} Agregar Productos {% endblock %}
 {% block add_productos %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <span><img src="" alt=""><a class="navbar-brand active" href="administrador:ordenes">Dashboard</a></span>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="d-flex nav-item">
-          <a class="nav-link" href="{% url 'administrador:ordenes' %}">Orden</a>
-        </li>
-        <li class="d-flex nav-item">
-          <a class="nav-link" href="{% url 'productos:index' %}">Productos</a>
-        </li>
-      </ul>
-      <a class="d-flex nav-link link-light" href="{% url 'administrador:cerrar_sesion' %}">Cerrar Sesión</a>
-    </div>
-  </div>
-</nav>
-<div class="container">
   <div class="row">
     <h4>Agregar un nuevo producto</h4>
     <br><br>
@@ -34,7 +14,7 @@
       </div>
       <div class="form-group">
         <label for='adddesc'>Descripción</label>
-        <textarea name='descripcion' id='adddesc' class='form-control' rows='3' placeholder='description'></textarea>
+        <textarea name='descripcion' id='adddesc' class='form-control' rows='3' placeholder='descripcion'></textarea>
       </div>
       {% if productos.categoria %}
       <div class="form-group">
@@ -52,7 +32,7 @@
       </div>
       <div class="form-group">
         <label for="addprice">Precio</label>
-        <input type="text" name="precio" id="addprice" class="form-control" rows="3">
+        <input type="number" name="precio" id="addprice" class="form-control" rows="3">
       </div>
       <br><br>
       <div class="form-group">

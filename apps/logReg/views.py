@@ -27,6 +27,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     # Redirect to a success page.
+    request.session.clear() # borramos todas las claves de la session (La vieja confiable!)
     messages.success(request, ('Usted ha cerrado sesión!'))
     return redirect('usuarios:home')
 

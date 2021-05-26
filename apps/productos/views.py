@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 #from .models import Producto, Orden, OrdenItem
 from .models import Producto
+from .forms import  formProducto
 import bcrypt
 from django.core.paginator import EmptyPage, Paginator
 from django.core.files.storage import FileSystemStorage
@@ -107,7 +108,7 @@ def index(request):
             # "todosLosProductos" : productos,
             "todosLosProductos" : page,
             "cats": ["Pantalones", "Poleras", "Cocina", "Frutas", "Verduras", "Zapatos", "Zapatillas", "Celulares", "Computacion", "Juegos de Video", "Libros"],
-            "user": User.objects.get(id=currentUserID).nombre,
+            "user": request.user,
         }
         return render(request, "master/listar_productos.html", context)
 
@@ -157,12 +158,12 @@ def add_producto(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('productos:index')
+            return redirect('productos:add_prod')
         else:
             #Validamos si la imagen del producto esta en la base de datos!
             if Producto.objects.filter(imagen=request.FILES['imagen']).exists():
                 messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
-                return redirect('productos:index')
+                return redirect('productos:add_prod')
             else:
                 if request.method == "POST":
                     # archivoCargado=request.POST['imagen']
@@ -172,9 +173,9 @@ def add_producto(request):
                     # print("Tamaño del Archivo:", archivoCargado)
                     nuevo_producto = Producto.objects.create(
                         nombre = request.POST['nombre'],
-                        precio = request.POST['precio'],
+                        precio = int(request.POST['precio']),
                         categoria = request.POST['categoria'],
-                        inventario = request.POST['inventario'],
+                        inventario = int(request.POST['inventario']),
                         descripcion = request.POST['descripcion'],
                         imagen = request.FILES['imagen'],
                         uploaded_by = User.objects.get(id=request.session['user']['id'])
