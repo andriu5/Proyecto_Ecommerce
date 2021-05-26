@@ -1,5 +1,6 @@
-{% extends 'master/users_navbar.html' %}
+{% extends 'master/base.html' %}
 {% load static %}
+<<<<<<< HEAD
 {% block titulo %} Página de la tienda {% endblock %}
 {% block contenido %}
 <div class="container-fluid">
@@ -38,6 +39,14 @@
           </div>
         {% endfor %}
       </div>
+=======
+{% block head_title %} Página de la tienda {% endblock %}
+{% block content %}
+<div class="site-blocks-cover" styles="background-image: url({% static 'images/hero.jpg' %});" data-aos="fade">
+  <div class="container">
+    <div class="row">
+        <h5 class="usarioRegistrado-color col-md-4 pt-5 pt-md-0">Bienvenido a la tienda {{request.session.user.name}}!</h5>
+>>>>>>> productos
     </div>
   </div>
 </div>
