@@ -7,17 +7,20 @@ class ProductoManager(models.Manager):
     def product_validation(self, postData):
         errores = {}
         try:
-            print(postData['nombre'].isalpha())
-            if len(postData['nombre']) < 2 or not postData['nombre'].isalpha():
+            postdata_name = postData['nombre']
+            print("Imprimiendo desde product_validation: ", postdata_name.isalpha())
+            print("Imprimiendo desde product_validation: ", postdata_name)
+            if len(postdata_name) < 2 or not postdata_name.isalpha():
                 errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
         except Exception as e:
-            print(postData['nombre'][0].isalpha())
-            print(postData['nombre'].isalpha())
+            print(e)
             errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
+        print("Imprimiendo desde product_validation: ",postData['descripcion'])
+        print(postData['descripcion'])
         if len(postData['descripcion']) < 10 or not postData['descripcion'].isalpha():
             errores['descripcion'] = "Error: La descripción del producto debe ser de al menos 10 caracteres."
         try:
-            if float(postData['precio']) < 0 and not postData['precio'].isalpha():
+            if int(postData['precio']) < 0 and not postData['precio'].isalpha():
                 errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
         except Exception as e:
             errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."

@@ -154,16 +154,17 @@ def add_producto(request):
         return redirect('administrador:index')
     if 'admin' in request.session.keys():
         #Validamos el formulario contra la base de datos
+        print(request.POST)
         errors = Producto.objects.product_validation(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('productos:add_prod')
+            return redirect('productos:admin_productos')
         else:
             #Validamos si la imagen del producto esta en la base de datos!
             if Producto.objects.filter(imagen=request.FILES['imagen']).exists():
                 messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
-                return redirect('productos:add_prod')
+                return redirect('productos:admin_productos')
             else:
                 if request.method == "POST":
                     # archivoCargado=request.POST['imagen']
@@ -178,7 +179,7 @@ def add_producto(request):
                         inventario = int(request.POST['inventario']),
                         descripcion = request.POST['descripcion'],
                         imagen = request.FILES['imagen'],
-                        uploaded_by = User.objects.get(id=request.session['user']['id'])
+                        uploaded_by = request.user
                         )
                     print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
                     return redirect('productos:index')
