@@ -149,3 +149,8 @@ LOGIN_URL = '/administrador/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # si no existe media, Django la va crear, si existe la toma:
 MEDIA_URL = "/media/"
+# MEDIA_URL indica la ruta en la que se deben guardar los archivos.
+# MEDIA_ROOT indica la carpeta física donde se guardaran los archivos.
+# BASE_DIR Representa el directorio raiz del proyecto.
+# si se utiliza el modelo para subir los archivos, entonces la carpeta media
+# debe ser creada.

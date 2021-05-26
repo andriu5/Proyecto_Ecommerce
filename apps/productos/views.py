@@ -164,18 +164,18 @@ def add_producto(request):
                 return redirect('productos:index')
             else:
                 if request.method == "POST":
-                    archivoCargado=request.POST['imagen']
-                    adminID = request.session['admin_id']
-                    fileSS = FileSystemStorage("media/"+adminID)
-                    fileSS.save(archivoCargado.name, archivoCargado)
-                    print("Tamaño del Archivo:", archivoCargado)
+                    # archivoCargado=request.POST['imagen']
+                    # adminID = request.session['admin_id']
+                    # fileSS = FileSystemStorage("media/"+adminID)
+                    # fileSS.save(archivoCargado.name, archivoCargado)
+                    # print("Tamaño del Archivo:", archivoCargado)
                     nuevo_producto = Producto.objects.create(
                         nombre = request.POST['nombre'],
                         precio = request.POST['precio'],
                         categoria = request.POST['categoria'],
                         inventario = request.POST['inventario'],
                         descripcion = request.POST['descripcion'],
-                        imagen = request.POST['imagen'],
+                        imagen = request.FILES['imagen'],
                         uploaded_by = User.objects.get(id=request.session['user']['id'])
                         )
                     print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
