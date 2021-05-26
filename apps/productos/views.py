@@ -161,28 +161,28 @@ def add_producto(request):
                 messages.error(request, value)
             return redirect('productos:admin_productos')
         else:
-            #Validamos si la imagen del producto esta en la base de datos!
-            if Producto.objects.filter(imagen=request.FILES['imagen']).exists():
-                messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['message']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
-                return redirect('productos:admin_productos')
-            else:
-                if request.method == "POST":
-                    # archivoCargado=request.POST['imagen']
-                    # adminID = request.session['admin_id']
-                    # fileSS = FileSystemStorage("media/"+adminID)
-                    # fileSS.save(archivoCargado.name, archivoCargado)
-                    # print("Tamaño del Archivo:", archivoCargado)
-                    nuevo_producto = Producto.objects.create(
-                        nombre = request.POST['nombre'],
-                        precio = int(request.POST['precio']),
-                        categoria = request.POST['categoria'],
-                        inventario = int(request.POST['inventario']),
-                        descripcion = request.POST['descripcion'],
-                        imagen = request.FILES['imagen'],
-                        uploaded_by = request.user
-                        )
-                    print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
-                    return redirect('productos:index')
+            # #Validamos si la imagen del producto esta en la base de datos!
+            # if Producto.objects.filter(imagen=request.FILES['imagen']).exists():
+            #     messages.add_message(request, messages.ERROR, f"Error: La imagen '{request.POST['imagen']}' no puede agregarse por que ya existe esa imagen en la base de datos!")
+            #     return redirect('productos:admin_productos')
+            # else:
+            if request.method == "POST":
+                # archivoCargado=request.POST['imagen']
+                # adminID = request.session['admin_id']
+                # fileSS = FileSystemStorage("media/"+adminID)
+                # fileSS.save(archivoCargado.name, archivoCargado)
+                # print("Tamaño del Archivo:", archivoCargado)
+                nuevo_producto = Producto.objects.create(
+                    nombre = request.POST['nombre'],
+                    precio = int(request.POST['precio']),
+                    categoria = request.POST['categoria'],
+                    inventario = int(request.POST['inventario']),
+                    descripcion = request.POST['descripcion'],
+                    imagen = request.FILES['imagen'],
+                    uploaded_by = request.user
+                    )
+                print(f"Info: Nuevo Producto Agregado a la base de datos!\n")
+                return redirect('productos:index')
             return redirect('administrador:index')
 
 def edit_producto(request, id):

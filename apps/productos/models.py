@@ -39,7 +39,7 @@ class Producto(models.Model):
     categoria=models.CharField(max_length=255)
     inventario=models.PositiveIntegerField(default=0)
     descripcion=models.TextField()
-    imagen = models.ImageField(upload_to='productos', null=True)
+    imagen = models.ImageField(upload_to='productos', null=True, unique=True)
     uploaded_by = models.ForeignKey(User, related_name="producto_uploaded", on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
