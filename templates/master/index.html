@@ -2,10 +2,9 @@
 {% load static %}
 {% block titulo %} Página de la tienda {% endblock %}
 {% block content %}
-<div class="site-blocks-cover" style="background-image: url('{% static 'images/hero.jpg' %}');" data-aos="fade">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-2"  style="border: 1px solid grey; background-color: black;">
+      <div class="jumbotron col-2"  style="border: 1px solid grey; background-color: black;">
         <br>
         <h3>Categorías</h3>
         <br>
@@ -17,9 +16,8 @@
           {% endfor %}
         </div>
       </div>
-      <div class="col-10"  style="border: 1px solid grey;">
-        <h1 style="color: crimson;">Registrate y obten un {{descuento}} en tu primera compra</h1>
-        <br>
+      <div class="jumbotron col-10"  style="border: 1px solid grey;">
+        <h1 style="color: crimson;">Regístrate y obtén un {{descuento}} en tu primera compra</h1>
         <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
           <div class="agile_top_brand_left_grid1">
             <div class="row">
@@ -31,7 +29,7 @@
                       <h5 class="card-title">{{ x.nombre }}</h5>
                       <p class="card-text">{{ x.descripcion }}</p>
                       <h4>${{x.precio}} <span>${{x.precio_original}}</span></h4>
-                      <a href="#" class="btn btn-primary">Agregar al Carrito</a>
+                      <a href="{% url 'tienda:show_prod' x.id %}" class="btn btn-primary" value="{{producto}}" onclick="saveItem()">Agregar al Carrito</a>
                     </div>
                   </div>
                   <br>
@@ -43,5 +41,4 @@
       </div>
     </div>
   </div>
-</div>
 {% endblock %}

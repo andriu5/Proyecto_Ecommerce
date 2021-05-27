@@ -16,7 +16,8 @@ def login_user(request):
             # Redirect to a success page.
             login(request, user)
             messages.success(request, ('Usuario ha iniciado sesión correctamente!'))
-            return redirect('usuarios:home')
+            #return redirect('usuarios:home')
+            return redirect('/')
         else:
             # Return an 'invalid login' error message.
             messages.success(request, ('Error en el inicio de sesión!'))
@@ -29,7 +30,8 @@ def logout_user(request):
     # Redirect to a success page.
     request.session.clear() # borramos todas las claves de la session (La vieja confiable!)
     messages.success(request, ('Usted ha cerrado sesión!'))
-    return redirect('usuarios:home')
+    #return redirect('usuarios:home')
+    return redirect('/')
 
 def register_user(request):
     if request.method == 'POST':
@@ -42,7 +44,8 @@ def register_user(request):
             user = authenticate(request, username=username, password=password)
             login(request, user)
             messages.success(request, ('Usuario registrado correctamente!'))
-            return redirect('usuarios:home')
+            #return redirect('usuarios:home')
+            return redirect('/')
     else:
         #form = UserCreationForm()
         form = NewUserForm()
@@ -56,7 +59,8 @@ def edit_profile(request):
         if form.is_valid(): 
             form.save() # Si los Datos ingresados son validos guardamos los datos en la base de datos!
             messages.success(request, ('Perfil de usuario editado correctamente!'))
-            return redirect('usuarios:home')
+            #return redirect('usuarios:home')
+            return redirect('/')
     else:
         #form = UserChangeForm(instance=request.user)
         form = EditProfileForm(instance=request.user)
@@ -71,7 +75,8 @@ def change_password(request):
             form.save() # Si los Datos ingresados son validos guardamos los datos en la base de datos!
             update_session_auth_hash(request, form.user) # para el sistema que no me saque de la sesion!
             messages.success(request, ('Contraseña cambiada correctamente!'))
-            return redirect('usuarios:home')
+            #return redirect('usuarios:home')
+            return redirect('/')
     else:
         form = EditPasswordChangeForm(user=request.user)
         context = {'form': form}

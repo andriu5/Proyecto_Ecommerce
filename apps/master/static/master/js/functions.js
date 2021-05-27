@@ -1,9 +1,33 @@
-console.log("We're using JQuery!");
-$(document).ready(function() {
-    $("sup").click(function(){
-        $("#info").remove();
-    });
-});
+console.log("Hola!");
+
+let productos = [];
+
+function saveItem(params) {
+    console.log("Hola! desde saveItem!");
+    productos.push(params)
+    console.log(productos)
+    localStorage.setItem("productos", JSON.stringify(productos))
+    updateCount(productos.length);
+}
+
+function getItems() {
+    productos = JSON.parse(localStorage.getItem("productos"))
+    for (producto of productos) {
+        console.log(producto);
+    }
+    updateCount(productos.length);
+}
+
+function updateCount(numItems) {
+    let count = document.getElementById("productsCount")
+    count.textContent = numItems
+}
+
+// $(document).ready(function() {
+//     $("sup").click(function(){
+//         $("#info").remove();
+//     });
+// });
 
 // $(document).ready(function() {
 //     $('#form1').submit(function(){

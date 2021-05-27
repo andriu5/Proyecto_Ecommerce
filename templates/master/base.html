@@ -24,12 +24,13 @@
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+    <script src="{% static 'master/js/functions.js' %}"></script>
     {# Additional CSS - specific to certain pages #}
     {% block extrastyles %}
     {% endblock %}
 </head>
 
-<body>
+<body onload="getItems()">
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <div class="site-navbar-top">
@@ -50,13 +51,14 @@
                                         <a class="link-light" href="{% url 'usuarios:edit_profile' %}">Editar perfil&nbsp;<span><i class="fas fa-user"></i></span></a>
                                         <a class="link-light" href="{% url 'usuarios:logout' %}">Cerrar Sesión&nbsp;<span><i class="fas fa-sign-out-alt"></i></span></a>
                                     {% else %}
-                                        <a class="link-light" href="{% url 'usuarios:login' %}">Iniciar Sesión&nbsp;<span><i class="fas fa-sign-in-alt"></i></span></a>
+                                        <a class="link-light" href="{% url 'usuarios:login' %}">Iniciar Sesión&nbsp;<span><i class="fas fa-sign-in-alt"></i></span>&nbsp;</a>
+                                        <a class="link-light" href="{% url 'usuarios:register' %}">Registrate&nbsp;<span><i class="fas fas fa-user"></i></span>&nbsp;</a>
                                     {% endif %}
                                 </li>
                                 <li>
                                     <a href="{% url 'tienda:carrito' %}" class="site-cart">
                                         <span><i class="fas fa-shopping-cart"></i></span>
-                                        <span class="count">0</span>
+                                        <span id="productsCount" class="count">0</span>
                                     </a>
                                 </li>
                                 <li class="d-inline-block d-md-none ml-md-0">

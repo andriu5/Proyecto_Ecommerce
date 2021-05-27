@@ -1,7 +1,10 @@
-from __future__ import unicode_literals
 from django.db import models
-# from apps.logReg.models import User
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.db.models.signals import pre_save
+from django.shortcuts import reverse
+from django.conf import settings
+
+User = get_user_model()
 
 class ProductoManager(models.Manager):
     def product_validation(self, postData):
@@ -43,7 +46,19 @@ class Producto(models.Model):
     uploaded_by = models.ForeignKey(User, related_name="producto_uploaded", on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    activo=models.BooleanField(default=True)
 
     objects = ProductoManager()
     def __str__(self):
         return self.nombre
+
+    # def get_absolute_url(self):
+    #     return reverse('tienda', kwargs={'imagen': self.imagen})
+    #     #return reverse("tienda", "{0}{1}".format(settings.MEDIA_URL, self.imagen.url))
+
+    def get_price(self):
+        return "{:.2f}".format(self.precio / 100)
+        
+    @property
+    def in_stock(self):
+        return self.inventario > 0
