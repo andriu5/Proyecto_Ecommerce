@@ -25,6 +25,7 @@ urlpatterns = [
     path('usuarios/', include('apps.logReg.urls')),
     path('productos/', include('apps.productos.urls')),
     path('administrador/', include('apps.administrador.urls')),
+    path('tienda/', include('apps.tienda.urls')),
 ]
 
 #Generamos las muestras y poder ver los archivos que temnemos guardados!

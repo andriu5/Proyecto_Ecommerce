@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="col-10"  style="border: 1px solid grey;">
-        <h2>Registrate y obten un {{descuento}} en tu primera compra</h2>
+        <h1 style="color: crimson;">Registrate y obten un {{descuento}} en tu primera compra</h1>
         <br>
         <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
           <div class="agile_top_brand_left_grid1">
@@ -26,7 +26,7 @@
               {% for x in precioPromo %}
                 <div class="col-sm">
                   <div class="card" style="width: 18rem;">
-                    <img src="{{ x.imagen.url }}" class="card-img-top" alt="{{ x.nombre }}" style="padding:5px;height:225px;">
+                    <a href="{% url 'tienda:show_prod' x.id %}"><img src="{{ x.imagen.url }}" class="card-img-top" alt="{{ x.nombre }}" style="padding:5px;height:225px;"></a>
                     <div class="card-body">
                       <h5 class="card-title">{{ x.nombre }}</h5>
                       <p class="card-text">{{ x.descripcion }}</p>

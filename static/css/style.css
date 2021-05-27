@@ -973,3 +973,15 @@ padding-left:1em;
 .w3l_agile_top_brand_left_grid{
 margin:0 !important;
 }
+
+#restore-btn {
+  padding: 10px;
+  margin: 5px;
+  color: white;
+  font-weight: bolder;
+  background-color: green;
+  border: 1px solid black;
+  box-shadow: 2px 4px grey;
+  position: relative;
+  left: -15px;
+}

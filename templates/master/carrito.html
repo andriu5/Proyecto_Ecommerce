@@ -1,0 +1,58 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block titulo %} Carrito de compras {% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Carro de compras</h1>
+    </div>
+  </div>
+  <div class="jumbotron row">
+    <div class="table-responsive col-mw-auto">
+      <table class="table table-hover table-ligth">
+        <thead class="thead-dark table-dark">
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in productos %}
+          <tr>
+            <form action="#" method="post">
+              {% csrf_token %}
+              <td>{{product.nombre}}</td>
+              <td><input type="hidden" name="price" value="{{product.precio}}">${{product.precio}}</td>
+              <td><input type="number" name="cantidad" value="{{product.inventario}}" class="form-control" id="typeNumber"  class="col-auto"></td>
+              <td><input class="btn btn-danger active" role="button" type="submit" value="eliminar"></td>
+            </form>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-10"></div>
+    <div class="col-2">
+      <h4>Total: ${{total.precio__sum}}</h4>
+      <a type="button" href="/" id="restore-btn">Continuar Comprando</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Facturación</h1>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Envío</h1>
+    </div>
+  </div>
+</div>
+{% endblock %}
