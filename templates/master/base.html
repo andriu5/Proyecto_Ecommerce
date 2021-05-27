@@ -1,24 +1,13 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>{% block titulo %} {{titulo}} {% endblock %}</title>
+    {% load static %}
+    {% block favicon %}
+        <link rel="shortcut icon" href="{% static 'master/img/favicon.ico' %}">
+    {% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'icons/apple-icon-57x57.png' %}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'icons/apple-icon-60x60.png' %}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'icons/apple-icon-72x72.png' %}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'icons/apple-icon-76x76.png' %}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'icons/apple-icon-114x114.png' %}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'icons/apple-icon-120x120.png' %}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'icons/apple-icon-144x144.png' %}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'icons/apple-icon-152x152.png' %}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icons/apple-icon-180x180.png' %}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'icons/android-icon-192x192.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'icons/favicon-96x96.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icons/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'icons/manifest.json' %}">
 
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -35,13 +24,12 @@
     <link rel="stylesheet" href="{% static 'css/aos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
-    {% block favicon %}
-    <link rel="shortcut icon" href="{% static 'master/img/favicon.ico' %}">
+    {# Additional CSS - specific to certain pages #}
+    {% block extrastyles %}
     {% endblock %}
 </head>
 
 <body>
-
 <div class="site-wrap">
     <header class="site-navbar" role="banner">
         <div class="site-navbar-top">
@@ -50,11 +38,10 @@
                     <div class="col-6 col-md-8 mb-3 mb-md-0 col-md-4 order-1 order-md-2">
                         <div>
                             <a href="{% url 'index' %}">
-                                <img class="img-fluid" src="{% static 'master/img/2_online_store.png' %}" style="max-width: 150px;"/>
+                                <img class="img-fluid" src="{% static 'master/img/2_online_store.png' %}" style="max-width: 80px;"/>
                             </a>
                         </div>
                     </div>
-
                     <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                         <div class="site-top-icons">
                             <ul>
@@ -80,11 +67,9 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-        {% include 'master/navbar.html' %}
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">

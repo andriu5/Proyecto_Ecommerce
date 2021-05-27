@@ -6,27 +6,27 @@ from django.contrib.auth.models import User
 class ProductoManager(models.Manager):
     def product_validation(self, postData):
         errores = {}
-        try:
-            postdata_name = postData['nombre']
-            print("Imprimiendo desde product_validation: ", postdata_name.isalpha())
-            print("Imprimiendo desde product_validation: ", postdata_name)
-            if len(postdata_name) < 2 or not postdata_name.isalpha():
-                errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
-        except Exception as e:
-            print(e)
-            errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
-        print("Imprimiendo desde product_validation: ",postData['descripcion'])
-        print(postData['descripcion'])
-        if len(postData['descripcion']) < 10 or not postData['descripcion'].isalpha():
-            errores['descripcion'] = "Error: La descripción del producto debe ser de al menos 10 caracteres."
-        try:
-            if int(postData['precio']) < 0 and not postData['precio'].isalpha():
-                errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
-        except Exception as e:
-            errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
-        if len(postData['categoria']) < 2 or not postData['categoria'].isalpha():
-            errores['categoria_corta'] = "Error: El nombre de la categoría debe ser de al menos 2 caracteres."
-        # validar si la imagen fue ingresada en la base datos!
+        # try:
+        #     postdata_name = postData['nombre']
+        #     print("Imprimiendo desde product_validation1: ", postdata_name.isalpha())
+        #     print("Imprimiendo desde product_validation2: ", postdata_name)
+        #     if len(postdata_name) < 2 or not postdata_name.isalpha():
+        #         errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
+        # except Exception as e:
+        #     print(e)
+        #     errores['nombre_prod'] = "Error: El nombre del producto debe ser de al menos 2 caracteres."
+        # print("Imprimiendo desde product_validation3: ",postData['descripcion'])
+        # print(postData['descripcion'])
+        # if len(postData['descripcion']) < 10 or not postData['descripcion'].isalpha():
+        #     errores['descripcion'] = "Error: La descripción del producto debe ser de al menos 10 caracteres."
+        # try:
+        #     if int(postData['precio']) < 0 and not postData['precio'].isalpha():
+        #         errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
+        # except Exception as e:
+        #     errores['precio_negativo'] = "Error: El precio ingresado del producto debe ser un número mayor a cero."
+        # if len(postData['categoria']) < 2 or not postData['categoria'].isalpha():
+        #     errores['categoria_corta'] = "Error: El nombre de la categoría debe ser de al menos 2 caracteres."
+        # # validar si la imagen fue ingresada en la base datos!
         return errores
 
     def category_num(self, cat):
