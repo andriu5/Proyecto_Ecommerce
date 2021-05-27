@@ -1,9 +1,9 @@
-console.log("Hola!");
+console.log("Nuevo!");
 
 let productos = [];
 
 function saveItem(params) {
-    console.log("Hola! desde saveItem!");
+    console.log("Nuevo! desde saveItem!");
     productos.push(params)
     console.log(productos)
     localStorage.setItem("productos", JSON.stringify(productos))
