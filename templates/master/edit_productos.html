@@ -1,58 +1,41 @@
-{% extends 'master/base.html' %}
+{% extends 'master/admin_navbar.html' %}
 {% load static %}
 
 {% block titulo %} Editar Productos {% endblock %}
 {% block edit_productos %}
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="Login">Editar Producto - ID</h4>
-        </div>
-        <div class="modal-body">
-        <form action="{% url 'productos:add_prod' %}" method="POST" enctype="multipart/form-data" id="editprod">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for='editname'>Nombre</label>
-            <input type="text" name='editname' class="form-control" id="editname" placeholder="name">
-          </div>
-          <div class="form-group">
-            <label for='editdesc'>Descripción</label>
-            <textarea name='editdesc' id='editdesc' class='form-control' rows='4' placeholder='description'></textarea>
-          </div>
-          <div class="form-group">
-            <label for='editprice'>Precio</label>
-            <input type="text" name='editprice' id='editprice' class='form-control' placeholder='price'>
-          </div>
-          <div class="form-group">
-            <label for='editcat'>Categorías</label>
-            <select name='editcat' id='editcat' class='form-control' rows='3'>
-            {% for cat in cats %}
-              <option value='{{cat}}'>{{cat|title}}</option>
-            {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for='newcat'>Agregar nueva categoría</label>
-            <input type='text' name='newcat' id='newcat' placeholder='new category' class='form-control'>
-          </div>
-          <div class="form-group">
-            <label for="editinv">Inventario</label>
-            <input type='text' name='editinv' id='editinv' placeholder='Inventory' class='form-control' rows='3'>
-          </div>
-          <div class="form-group">
-            <label for='newimg'>Subir Imagen</label>
-            <input type="file" name='newimg' id="newimg">
-          </div>
-          <div class='modal-footer'>
-            <div id='editer'>
-              <button class='btn btn-info form-inline' data-dismiss='modal'>Cancel</button>
-              <button class='btn btn-primary' type='submit'>Update</button>
-            </div>
-          </div>
-        </form>
-      </div>
+<div class="row">
+  <h4>Editar {{producto.nombre}} con ID: {{producto.id}}</h4>
+  <br><br>
+  <form action="{% url 'productos:update_prod' producto.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for='addname'>Nombre</label>
+      <input type="text" name='nombre' class="form-control" id="addname" placeholder="Nombre del producto" value="{{ producto.nombre }}">
     </div>
-  </div>
+    <div class="form-group">
+      <label for='adddesc'>Descripción</label>
+      <textarea name='descripcion' id='adddesc' class='form-control' rows='3' placeholder='descripcion'>{{ producto.descripcion }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for='addnewcat'>Agregar nueva categoría</label>
+      <input type='text' name='categoria' id='addnewcat' placeholder='new category' class='form-control' value="{{ producto.categoria }}">
+    </div>
+    <div class="form-group">
+      <label for="addInv">Inventario</label>
+      <input type="number" name="inventario" id="addInv" class="form-control" rows="3" value="{{ producto.inventario }}">
+    </div>
+    <div class="form-group">
+      <label for="addprice">Precio</label>
+      <input type="number" name="precio" id="addprice" class="form-control" rows="3" value="{{ producto.precio }}">
+    </div>
+    <br>
+    <div class="form-group">
+      <label for='newimg'>Subir imagen</label>
+      <input type="file" name='imagen' id="newimg" value="{{producto.imagen.url}}">
+    </div>
+    <br>
+    <a href="{% url 'productos:index' %}" class="btn btn-danger form-inline">Cancelar</a>
+    <button class='btn btn-primary' type='submit'>Confirmar Cambios</button>
+  </form>
+</div>
 {% endblock %}

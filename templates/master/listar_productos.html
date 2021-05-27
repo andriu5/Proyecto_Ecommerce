@@ -38,10 +38,10 @@
             {% else %}
             <td><img class='admin_img' src="/media/apple.png" alt='Imagen predetermninada'></td>
             {% endif %}
-            <td><a href="#"><b>{{producto.id}}</b></a></td>
+            <td><a href="{% url 'productos:info_prod' producto.id %}"><b>{{producto.id}}</b></a></td>
             <td>{{producto.nombre}}</td>
-            <td>{{producto.cantidad_inventario}}</td>
-            <td>{{producto.cantidad_vendido}}</td>
+            <td>{{producto.inventario}}</td>
+            <td>{{producto.cantidad_vendida}}</td>
             <td>
               <a href="{% url 'productos:delete_prod' producto.id %}" class="btn btn-danger">Eliminar</a>
               <a href="{% url 'productos:edit_prod' producto.id  %}" class="btn btn-primary">Editar</a>

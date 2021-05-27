@@ -1,0 +1,21 @@
+{% extends 'master/admin_navbar.html' %}
+{% load static %}
+
+{% block titulo %} Información de Producto {% endblock %}
+{% block edit_productos %}
+<h4>Ficha de Producto: {{producto.nombre}}. ID: {{producto.id}}</h4>
+<br><br>
+<div class="row">
+    <div class="col-sm">
+      <div class="card" style="width: 18rem;">
+        <img src="{{producto.imagen.url}}" class="card-img-top" alt="{{producto.nombre}}">
+        <div class="card-body">
+          <h5 class="card-title">{{producto.nombre}}</h5>
+          <p class="card-text">{{producto.descripcion}}</p>
+          <a href="{% url 'productos:index' %}" class="btn btn-secondary">Volver al Dashboard...</a>
+        </div>
+      </div>
+      <br>
+    </div>
+</div>
+{% endblock %}
