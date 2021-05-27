@@ -118,3 +118,226 @@ p.page-pointer {
     background-image: url({% static 'images/hero.jpg' %});
 } */
 /* Estilos de Victor para Usuarios*/
+
+
+/* Codigo para productos */
+
+/* Barra Navegacion */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/*Aplica estilo a enlaces dentro de la barra de navegación*/
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+/* Cambiar de color cuando puntero está sobre link */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+/*destacar página activa */
+.topnav a.active {
+    background-color: #04aa6d;
+    color: white;
+}
+/*Esconder el link que activa el menú en pantallas pequeñas */
+.topnav .icon {
+    display: none;
+}
+
+/* When the screen is less than 600 pixels wide, hide all links,
+    except for the first one ("Home"). Show the link that contains should open
+    and close the topnav (.icon) */
+@media screen and (max-width: 600px) {
+    .topnav a:not(:first-child) {display: none;}
+    .topnav a.icon {
+      float: right;
+      display: block;
+    }
+  }
+  
+  /* The "responsive" class is added to the topnav with JavaScript when the user
+    clicks on the icon. This class makes the topnav look good on small screens
+    (display the links vertically instead of horizontally) */
+  @media screen and (max-width: 600px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive a.icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .topnav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  }
+  .contenedor {
+    margin-top: 40px;
+  }
+
+  /* The sidebar menu */
+.sidenav {
+  /*height: 100%;*/ /* Full-height: remove this if you want "auto" height */
+  width: 260px; /* Set the width of the sidebar */
+  /*position: relative;*/ /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top:0px; /* Stay at the top */
+  left: 0px;
+  background-color: #eee; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.cajaProducto {
+  float: left;
+  background-color: #2196F3;
+  color: #ffffff;
+  width: 300px;
+  line-height: 300px;
+  text-align: center;
+  margin: 2px;
+  /* display: none; */
+}
+
+/*-- tienda -- */
+/* html, body{
+  font-size: 100%;
+font-family: 'Open Sans', sans-serif;
+background:#ffffff;
+}
+ul li,ol li{
+font-size:14px;
+}
+p{
+margin:0;
+}
+h1,h2,h3,h4,h5,h6,a{
+font-family:'Ubuntu', sans-serif !important;
+margin:0;
+}
+ul,label{
+margin:0;
+padding:0;
+}
+body a:hover{
+text-decoration:none;
+} */
+
+.snipcart-details {
+  text-align: center;
+  margin: 1.5em auto 1em;
+  width:77%;
+}
+
+ .snipcart-details input.button {
+  font-size: 14px;
+  color: #fff;
+  background: #FA1818;
+  text-decoration: none;
+  position: relative;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  text-transform: uppercase;
+  padding: .5em 0;
+  outline: none;
+}
+.agile_top_brand_left_grid:hover .snipcart-details input.button,.snipcart-details input.button:hover{
+  background: #84C639;
+}
+
+.agile_top_brand_left_grid {
+  position: relative;
+  display: block;
+}
+
+input[type="submit"],#PPMiniCart .minicart-submit,.w3ls_vegetables ul li a,input[type="reset"],.agileinfo_mail_grid_left ul li a,.events_bottom_left2 ul li a,.w3ls_service_grids1_right a,ul.agileits_social_icons li a,.w3l_banner_nav_right_banner_pet a,.w3ls_w3l_banner_nav_right_grid_head_grid ul li a,.products-breadcrumb ul li a,.w3_footer_grid ul li a,.w3l_fresh_vegetables_grid ul li a,.wthree_footer_copy p a,.agile_top_brand_left_grid1 .button,.w3ls_logo_products_left1 ul.special_items li a,.w3ls_logo_products_left1 ul.phone_email li a{
+	transition: .5s ease-in;
+	-webkit-transition: .5s ease-in;
+	-moz-transition: .5s ease-in;
+	-o-transition: .5s ease-in;
+	-ms-transition: .5s ease-in;
+}
+.agile_top_brand_left_grid{
+	background: #FFFFFF;
+    padding: .5em;
+    border: 1px solid #BEBEBE;
+	position:relative;
+}
+.column div.agile_top_brand_left_grid {
+	position: relative;
+	margin:0;
+}
+.agile_top_brand_left_grid figure {
+	margin: 0;
+	padding: 0;
+	background:transparent;
+	overflow: hidden;
+	z-index: 0;
+}
+.snipcart-thumb a {
+  display: block;
+  text-align: center;
+}
+ .agile_top_brand_left_grid1{
+	padding:1em;
+	border:1px solid #D7D7D7;
+}
+.agile_top_brand_left_grid1 img{
+	margin:0 auto;
+}
+.agile_top_brand_left_grid1 p{
+	color:#212121;
+	margin:1.5em 0 1em;
+	line-height:1.5em;
+	text-transform:capitalize;
+	font-size:14px;
+}
+.agile_top_brand_left_grid1 h4,.agileinfo_single_right_snipcart h4{
+	font-weight:600;
+	font-size:1em;
+	color:#212121;
+}
+.agile_top_brand_left_grid1 h4 span,.agileinfo_single_right_snipcart h4 span{
+	font-weight:300;
+	text-decoration:line-through;
+	padding-left:1em;
+}
+.w3l_agile_top_brand_left_grid{
+	margin:0 !important;
+}

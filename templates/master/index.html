@@ -10,6 +10,32 @@
         <h2>el formulario product name</h2>
         <br>
         <h3>lista de categorias</h3>
+
+        <!-- item1 -->
+        <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+          <div class="agile_top_brand_left_grid1">
+            <figure>
+                <div class="snipcart-item block">
+                    <div class="snipcart-thumb">
+                        <a href="single.html"><img src="{% static 'master/img/5.png' %}" alt=" " class="img-responsive" /></a>
+                        <h4>$3.00 <span>$5.00</span></h4>
+                        <p>knorr instant soup (100 gm)</p>
+                    </div>
+                </div>
+                <div class="snipcart-details">
+                    <form action="#" method="POST">
+                        <input type="hidden" name="cmd" value="_cart" />
+    		            <input type="hidden" name="add" value="1" />
+                        <input type="hidden" name="business" value=" " />
+                        <input type="hidden" name="return" value=" " />
+    		            <input type="hidden" name="cancel_return" value=" " />
+            	    	<input type="submit" name="submit" value="Add to cart" class="button" />
+                    </form>
+                </div>
+            </figure>
+          </div>
+        </div>
+
       </div>
       <div class="col-9"  style="border: 1px solid grey; background-color: white;">
         <h2>aquí van los poductos</h2>
