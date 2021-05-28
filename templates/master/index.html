@@ -29,7 +29,7 @@
                       <h5 class="card-title">{{ x.nombre }}</h5>
                       <p class="card-text">{{ x.descripcion }}</p>
                       <h4>${{x.precio}} <span>${{x.precio_original}}</span></h4>
-                      <a href="{% url 'tienda:show_prod' x.id %}" class="btn btn-primary" value="{{producto}}" onclick="saveItem()">Agregar al Carrito</a>
+                      <a href="{% url 'tienda:show_prod' x.id %}" class="btn btn-primary" value="{{x}}" onclick="saveItem({{x}})">Agregar al Carrito</a>
                     </div>
                   </div>
                   <br>

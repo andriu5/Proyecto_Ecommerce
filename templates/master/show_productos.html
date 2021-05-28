@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-5 col-md">
           <div class="card" style="width: 25rem;">
-            <img src="{{producto.imagen.url}}" class="card-img-top" alt="{{producto.nombre}}">
+            <img src="{{producto.imagen.url}}" class="card-img-top" alt="{{p.nombre}}">
             <div class="card-body">
               <h5 class="card-title">{{producto.nombre}}</h5>
               <h4>Precio: ${{producto.precio}}</h4>
@@ -24,11 +24,12 @@
           <h4>Información del Producto: </h4>
           <br>
           <p>{{producto.descripcion}}</p>
-          {% if producto.inventario %}
+          {% if producto.in_stock %}
           <form method="POST" action="{% url 'tienda:agregar_a_carrito' %}">
             {% csrf_token %}
             {{form.as_p}}
-            <a href="#" class="btn btn-primary" value="{{producto}}" onclick="saveItem()">Agregar al Carrito</a>
+            {{producto}}
+            <a href="#" class="btn btn-primary" value="{{p}}" onclick="saveItem({{p}});">Agregar al Carrito</a>
           </form>
           {% else %}
             <p>¡El producto no está en el inventario!</p>
@@ -57,7 +58,7 @@
                     <h4>${{prod.precio}}</h4>
                     {% csrf_token %}
                     {{form.as_p}}
-                    <a href="#" class="btn btn-primary" value="{{producto}}" onclick="saveItem()">Agregar al Carrito</a>
+                    <a href="#" class="btn btn-primary" value="{{producto}}" onclick="saveItem({{producto}})">Agregar al Carrito</a>
                   </div>
                 </div>
                 <br>

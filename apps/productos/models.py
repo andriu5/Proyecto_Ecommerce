@@ -3,10 +3,23 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_save
 from django.shortcuts import reverse
 from django.conf import settings
+import json
 
 User = get_user_model()
 
 class ProductoManager(models.Manager):
+
+    def get_producto(self,producto):
+        p = {
+            "id":producto.id,
+            "nombre" : producto.nombre,
+            "cantidad_inventario" : producto.inventario,
+            "cantidad_vendida" : producto.cantidad_vendida,
+            "imagen" : producto.imagen.url,
+        }
+
+        return str(p)
+
     def product_validation(self, postData):
         errores = {}
         # try:
@@ -49,8 +62,39 @@ class Producto(models.Model):
     activo=models.BooleanField(default=True)
 
     objects = ProductoManager()
-    def __str__(self):
+    # def str(self):
+    #     p = self.dict
+    #     if "_state" in p:
+    #         del p["_state"]
+    #     if "created_at" in p:
+    #         del p["created_at"]
+    #     if "updated_at" in p:
+    #         del p["updated_at"]
+    #     return str(p)
+    def str(self):
         return self.nombre
+
+    # def __str__(self):
+    #     return str(self.__dict__).replace("<","").replace(">","")
+    # def str(self):
+    #     #p = self.dict
+    #     p = {
+    #     "id":self.id,
+    #     "nombre" : self.nombre,
+    #     "cantidad_inventario" : self.inventario,
+    #     "cantidad_vendida" : self.cantidad_vendida,
+    #     "imagen" : self.imagen.url,
+    #     }
+    #     # if "_state" in p:
+    #     #     del p["_state"]
+    #     # if "created_at" in p:
+    #     #     del p["created_at"]
+    #     # if "updated_at" in p:
+    #     #     del p["updated_at"]
+    #     # Serializing json   
+    #     # json_object = json.dumps(p, indent = 4)
+    #     # return json_object
+    #     return str(p)
 
     # def get_absolute_url(self):
     #     return reverse('tienda', kwargs={'imagen': self.imagen})

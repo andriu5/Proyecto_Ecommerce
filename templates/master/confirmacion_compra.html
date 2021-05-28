@@ -1,0 +1,22 @@
+{% extends 'master/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block titulo %} Carrito de compras {% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="jumbotron col-md-10">
+      <h3>Thank you for your business!</h3>
+      <p>We charged your credit card for ${{request.session.product_price|floatformat:2}}</p>
+      <p>You have ordered #{{request.session.products_ordered}} items so far and spent ${{request.session.total_spent|floatformat:2}} with Amadon.com!</p>
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <a href="/" type="button" class="btn btn-outline-success">Continuar Comprando</a>
+          <a href="{% url 'tienda:reset' %}"><button type="button" class="btn btn-outline-danger">Cerrar Sesión</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

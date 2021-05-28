@@ -3,6 +3,7 @@ console.log("Nuevo!");
 let productos = [];
 
 function saveItem(params) {
+    alert(params);
     console.log("Nuevo! desde saveItem!");
     productos.push(params)
     console.log(productos)
@@ -21,6 +22,29 @@ function getItems() {
 function updateCount(numItems) {
     let count = document.getElementById("productsCount")
     count.textContent = numItems
+}
+
+function eliminarDelCarrito(id) {
+
+    let data = $('#formCart').serialize();
+    $.ajax({
+        type: "POST",
+        url: '/tienda/delete_item_cart/'+id+'/',
+        data: data
+    })
+    .done(function(respuesta) {
+        alert(respuesta.message);
+        $.ajax({
+            type: "GET",
+            url: '/tienda/carrito/'
+        })
+    })
+    .fail(function() {
+        console.log('Carrito: Error, revisar!');
+    })
+    .always(function() {
+        console.log('Acción completada!');
+    });
 }
 
 // $(document).ready(function() {

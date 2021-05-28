@@ -21,15 +21,17 @@
           </tr>
         </thead>
         <tbody>
+          <form id="formCart" method="POST" action="{% url 'tienda:confirmacion_compra' %}">
+          {% csrf_token %}
           {% for product in productos %}
           <tr>
-            <form action="#" method="post">
-              {% csrf_token %}
+              <input type="hidden" name="{{product.id}}" value="{{product.id}} ">
+              <!-- <input type="hidden" name="producto" value="productos"> aqui tengo que lograr ecnontrar alguna forma agregarle el objeto javascript productos al formulario-->
               <td>{{product.nombre}}</td>
               <td><input type="hidden" name="price" value="{{product.precio}}">${{product.precio}}</td>
               <td><input type="number" name="cantidad" value="{{product.inventario}}" class="form-control" id="typeNumber"  class="col-auto"></td>
-              <td><input class="btn btn-danger active" role="button" type="submit" value="eliminar"></td>
-            </form>
+              <!-- <td><input class="btn btn-danger active" role="button" type="submit" value="eliminar" onclick="eliminarDelCarrito({{product.id}});"></td> -->
+              <td><input class="btn btn-danger active" type="button" role="button" value="eliminar" onclick="eliminarDelCarrito({{product.id}});"></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -64,8 +66,8 @@
       </div>
       {% else %}
 
-      <form method="POST">
-          {% csrf_token %}
+      <!-- <form method="POST" action="{% url 'tienda:confirmacion_compra' %}"> -->
+          <!-- {% csrf_token %} -->
           <div class="row">
               <div class="col-md-6 mb-md-0">
                   <h2 class="h3 mb-3 text-black text-center">Detalle de Facturación</h2>
