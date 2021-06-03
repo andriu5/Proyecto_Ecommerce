@@ -1,25 +1,32 @@
 {% extends 'master/admin_navbar.html' %}
 {% load static %}
 
+{% block extrastyles %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+{% endblock %}
+{% block extrascripts %}
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+{% endblock %}
+
 {% block titulo %} Administración de Productos {% endblock %}
 {% block admin_productos %}
   <div class="row">
     <h1>Hola {{user}}:</h1>
-    <h2>aquí se va poder buscar productos por nombre de cliente, id, fecha, etc.</h2>
+    <!-- <h2>aquí se va poder buscar productos por nombre de cliente, id, fecha, etc.</h2> -->
     <br>
     <div class="col-4">
-      <form action="#" method="POST" class="d-flex">
+      <!-- <form action="#" method="POST" class="d-flex">
         {% csrf_token %}
         <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Buscar</button>
-      </form>
+      </form> -->
     </div>
     <div class="col-6"></div>
     <div class="col-2"><a href="{% url 'productos:admin_productos' %}" class="btn btn-primary btn-border">Agregar Producto</a></div>
     <!-- <div class="col-2"><a href="#" data-toggle='modal' data-target='#add-modal' class="btn btn-primary btn-border">Agregar Producto</a></div> -->
     <br>
     <div class="row">
-      <table class="table table-hover table-ligth table-striped table-bordered">
+      <table id="productTable" class="table table-hover table-ligth table-striped table-bordered">
         <thead class="thead-dark table-dark">
           <tr>
             <th scope='col'>Imagen</th>
@@ -51,7 +58,7 @@
         </tbody>
       </table>
     </div>
-    <br>
+    <!-- <br>
     <div class='pagination'>
       <p class="page-pointer">{{todosLosProductos}}</p>
       {% if todosLosProductos.has_previous %}
@@ -61,7 +68,7 @@
       <a href="{% url 'productos:dashboard' todosLosProductos.next_page_number %}">Next Page&raquo;</a>
       {% endif %}
     </div>
-    <br>
+    <br> -->
   </div>
 </div>
 {% endblock %}

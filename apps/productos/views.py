@@ -16,13 +16,13 @@ def index(request):
     if request.method == "GET":
         # Paginamos el dashboard de Productos cada 4 elementos usando Paginator
         productos = Producto.objects.all()
-        p = Paginator(productos, 4)
-        page_num = request.GET.get('/productos/dashboard/<int:page>/', 1)
-        page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
+        # p = Paginator(productos, 4)
+        # page_num = request.GET.get('/productos/dashboard/<int:page>/', 1)
+        # page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
         currentUserID = request.session['admin']['id']
         context = {
-            # "todosLosProductos" : productos,
-            "todosLosProductos" : page,
+            "todosLosProductos" : productos,
+            # "todosLosProductos" : page,
             "cats": ["Pantalones", "Poleras", "Cocina", "Frutas", "Verduras", "Zapatos", "Zapatillas", "Celulares", "Computacion", "Juegos de Video", "Libros"],
             "user": request.user,
         }

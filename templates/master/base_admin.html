@@ -28,11 +28,12 @@
     {#<script src="master/js/functions.js"></script>#}
   {% endblock %}
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+  <script src="{% static 'master/js/functions.js' %}"></script>
+  
   {# Additional JavaScript - specific to certain pages #}
   {% block extrascripts %}
   {% endblock %}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
-  <script src="{% static 'master/js/functions.js' %}"></script>
 </head>
 <body>
   {% block users_navBar %}
@@ -59,8 +60,6 @@
   {% endblock %}
   {% block change_password_usuarios %}
   {% endblock %}
-  </div>
-  {% include 'master/scripts.html' %}
 
 </body>
 </html>

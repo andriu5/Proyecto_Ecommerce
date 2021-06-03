@@ -112,15 +112,15 @@ def admin_ordenes(request):
             },
         ]
         # Paginamos el dashboard de Ordenes cada 4 elementos usando Paginator
-        p = Paginator(ordenes, 4)
-        page_num = request.GET.get('dashboard/orders/<int:page>/', 1)
-        page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
+        # p = Paginator(ordenes, 4)
+        # page_num = request.GET.get('dashboard/orders/<int:page>/', 1)
+        # page = p.page(page_num) # página desde donde comenzamos a mostrar, ósea, si colocamos 2 entregara el id=5 e id=6
         currentUserID = request.session['admin']['id']
         context={
             # 'todasLasOrdenes': Ordenes.objects.all()
-            #"todasLasOrdenes": ordenes
-            "todasLasOrdenes": page,
-            "user": User.objects.get(id=currentUserID).first_name
+            "todasLasOrdenes": ordenes,
+            # "todasLasOrdenes": page,
+            "user": User.objects.get(id=currentUserID).first_name #Par ausername usar: request.user
             }
         return render(request, "master/dashboard_orders.html", context)
     # asumiendo que este sistema de Django es muy seguro!

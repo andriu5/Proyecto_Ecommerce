@@ -47,6 +47,45 @@ function eliminarDelCarrito(id) {
     });
 }
 
+$(document).ready(function() {
+    $('#orderTable').DataTable({
+        "stateSave": true,
+        "dom": "fltpi",
+        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+        // "columnDefs": [
+        //     { "orderable": true, "targets": [0, 5] }
+        // ],
+        "language": {
+            "sSearch": "Buscar:",
+            "searchPlaceholder": "Buscar Ordenes",
+            "paginate": {
+                "first":      "Primera",
+                "last":       "Última",
+                "next":       "Siguiente",
+                "previous":   "Previa"},
+            "lengthMenu": "Mostrar _MENU_ ordenes",
+            "sInfo" : "Mostrando desde el _START_ al _END_ de un total de _TOTAL_ Ordenes"},
+    });
+    $('#productTable').DataTable({
+        "stateSave": true,
+        "dom": "fltpi",
+        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+        // "columnDefs": [
+        //     { "orderable": true, "targets": [0, 5] }
+        // ],
+        "language": {
+            "sSearch": "Buscar:",
+            "searchPlaceholder": "Buscar Productos",
+            "paginate": {
+                "first":      "Primera",
+                "last":       "Última",
+                "next":       "Siguiente",
+                "previous":   "Previa"},
+            "lengthMenu": "Mostrar _MENU_ productos",
+            "sInfo" : "Mostrando desde el _START_ al _END_ de un total de _TOTAL_ Productos"},
+    });
+});
+
 // $(document).ready(function() {
 //     $("sup").click(function(){
 //         $("#info").remove();

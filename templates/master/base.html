@@ -27,6 +27,7 @@
     <script src="{% static 'master/js/functions.js' %}"></script>
     {# Additional CSS - specific to certain pages #}
     {% block extrastyles %}
+    {# DataTables #}
     {% endblock %}
 </head>
 
@@ -56,9 +57,9 @@
                                     {% endif %}
                                 </li>
                                 <li>
-                                    <a href="{% url 'tienda:carrito' %}" class="site-cart">
+                                    <a href="{% url 'tienda:carrito_debug' %}" class="site-cart">
                                         <span><i class="fas fa-shopping-cart"></i></span>
-                                        <span id="productsCount" class="count">0</span>
+                                        <span class="count">{% if request.user.is_authenticated %}{{ request.session.carrito.productos_ordenados }}{% else %}0{% endif %}</span>
                                     </a>
                                 </li>
                                 <li class="d-inline-block d-md-none ml-md-0">

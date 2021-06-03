@@ -1,76 +1,63 @@
 {% extends 'master/admin_navbar.html' %}
 {% load static %}
+{% block extrastyles %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+{% endblock %}
+{% block extrascripts %}
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+{% endblock %}
 {% block titulo %} Administración de Ordenes {% endblock %}
 {% block admin_ordenes %}
   <div class="row">
     <h1>Hola {{user}}:</h1>
-    <h2>aquí se va poder buscar ordenes por nombre de cliente, id, fecha, etc.</h2>
     <br>
-    <form action="#" method="POST" class="d-flex">
-      {% csrf_token %}
-      <input class="form-control me-2" name="cliente" type="search" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Buscar</button>
-    </form>
     <br>
-    <div class="row">
-      <table class="table table-hover table-ligth table-striped table-bordered">
-        <thead class="thead-dark table-dark">
-          <tr>
-            <th scope='col'>#ID-Orden</th>
-            <th scope='col'>Nombre Cliente</th>
-            <th scope='col'>Fecha</th>
-            <th scope='col'>Dirección de facturación</th>
-            <th scope='col'>Total</th>
-            <th scope='col'>Estado</th>
-            <th scope='col'>Actualizar Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for orden in todasLasOrdenes %}
-          <tr>                    
-            <td><a href="#"><b>{{orden.id}}</b></a></td>
-            <td>{{orden.cliente.nombre}} {{orden.cliente.apellido}}</td>
-            <td>{{orden.created_at}}</td>
-            <td>{{orden.direccion_facturacion}} <br>{{orden.ciudad_facturacion}}, {{orden.pais_facturacion}} - {{orden.codigo_postal}}</td>
-            <td>${{orden.total}}</td>
-            <td>{{orden.estado}}</td>
-            <td>
-              {% if orden.estado != "Cancelada" and orden.estado != "Enviado" %}
-              <form action="#" method="POST">
-                {% csrf_token %}
-                <select name="newstatus" class="form-group" id="newstatus">
-                  <option value="in_transit">En Transito</option>
-                  <option value="delivered">Despachado</option>
-                  <option value="cancelled">Cancelado</option>                        
-                </select>
-                <input type="submit" value="Update" class='btn btn-success'>
-              </form>
-              {% else %}
-                {% if orden.estado == "Cancelada"%}
-                <span class="error">La orden {{orden.id}} fue cancelada</span><br>
-                <span class="error">@ {{orden.updated_at}}</span>
-                {% endif %}
-                {% if orden.estado == "Enviado" %}
-                <span class="success">La orden {{orden.id}} fue despachada</span><br>
-                <span class="success">@ {{orden.updated_at}}</span>
-                {% endif %}
+    <table id="orderTable" class="table table-hover table-ligth table-striped table-bordered">
+      <thead class="thead-dark table-dark">
+        <tr>
+          <th scope='col'>#ID-Orden</th>
+          <th scope='col'>Nombre Cliente</th>
+          <th scope='col'>Fecha</th>
+          <th scope='col'>Dirección de facturación</th>
+          <th scope='col'>Total</th>
+          <th scope='col'>Estado</th>
+          <th scope='col'>Actualizar Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for orden in todasLasOrdenes %}
+        <tr>                    
+          <td><a href="#"><b>{{orden.id}}</b></a></td>
+          <td>{{orden.cliente.nombre}} {{orden.cliente.apellido}}</td>
+          <td>{{orden.created_at}}</td>
+          <td>{{orden.direccion_facturacion}} <br>{{orden.ciudad_facturacion}}, {{orden.pais_facturacion}} - {{orden.codigo_postal}}</td>
+          <td>${{orden.total}}</td>
+          <td>{{orden.estado}}</td>
+          <td>
+            {% if orden.estado != "Cancelada" and orden.estado != "Enviado" %}
+            <form action="#" method="POST">
+              {% csrf_token %}
+              <select name="newstatus" class="form-group" id="newstatus">
+                <option value="in_transit">En Transito</option>
+                <option value="delivered">Despachado</option>
+                <option value="cancelled">Cancelado</option>                        
+              </select>
+              <input type="submit" value="Update" class='btn btn-success'>
+            </form>
+            {% else %}
+              {% if orden.estado == "Cancelada"%}
+              <span class="error">La orden {{orden.id}} fue cancelada</span><br>
+              <span class="error">@ {{orden.updated_at}}</span>
               {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <br><br>
-    <div class='pagination'>
-      <p class="page-pointer">{{todasLasOrdenes}}</p>
-      {% if todasLasOrdenes.has_previous %}
-      <a href="{% url 'administrador:dashboard' todasLasOrdenes.previous_page_number %}">&laquo;Previous Page</a>
-      {% endif %}
-      {% if todasLasOrdenes.has_next %}
-      <a href="{% url 'administrador:dashboard' todasLasOrdenes.next_page_number %}">Next Page&raquo;</a>
-      {% endif %}
-    </div>
+              {% if orden.estado == "Enviado" %}
+              <span class="success">La orden {{orden.id}} fue despachada</span><br>
+              <span class="success">@ {{orden.updated_at}}</span>
+              {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-</div>
 {% endblock %}

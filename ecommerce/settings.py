@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ['DEBUG']
+print("DEBUG = ", DEBUG)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -135,12 +136,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+   os.path.join(BASE_DIR, 'static')
 ]
-# STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 # si el usuario esta logeado lo deja acceder sino va a la ruta de LOGIN_URL
 LOGIN_URL = '/administrador/'
@@ -158,30 +159,29 @@ MEDIA_URL = "/media/"
 # PAYPAL_CLIENT_ID= env('PAYPAL_SANDBOX_CLIENT_ID')
 # PAYPAL_SECRET_KEY= env('PAYPAL_SANDBOX_SECRET_KEY')
 
-if DEBUG is False:
-    SESSION_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_REDIRECT_EXEMPT = []
-    SECURE_SSL_REDIRECT = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# if DEBUG is False:
+#     SESSION_COOKIE_SECURE = True
+#     SECURE_BROWSER_XSS_FILTER = True
+#     SECURE_CONTENT_TYPE_NOSNIFF = True
+#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#     SECURE_HSTS_SECONDS = 31536000
+#     SECURE_REDIRECT_EXEMPT = []
+#     SECURE_SSL_REDIRECT = True
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['http://18.217.46.217']
+#     ALLOWED_HOSTS = ['http://18.217.46.217']
 
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql', # cambiar la base de datos a postgres
-            'NAME': 'ecommerce_db', # nombre de la base de datos, se creará en el servidor de Postgres a continuación
-            'USER': 'postgres', # postgres para macOS o 'USER': 'postgres', para Windows
-            'PASSWORD': 'root', # contraseña a la que la cambió al instalar Postgres
-            'HOST': '127.0.0.1', # dirección IP localhost
-            'PORT': '5432', # puerto del servidor postgres predeterminado
-        }
-    }
-
-    # PAYPAL_CLIENT_ID= env('PAYPAL_LIVE_CLIENT_ID')
-    # PAYPAL_SECRET_KEY= env('PAYPAL_LIVE_SECRET_KEY')
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql', # cambiar la base de datos a postgres
+#             'NAME': 'ecommerce_db', # nombre de la base de datos, se creará en el servidor de Postgres a continuación
+#             'USER': 'postgres', # postgres para macOS o 'USER': 'postgres', para Windows
+#             'PASSWORD': 'root', # contraseña a la que la cambió al instalar Postgres
+#             'HOST': '127.0.0.1', # dirección IP localhost
+#             'PORT': '5432', # puerto del servidor postgres predeterminado
+#         }
+#     }
+#     PAYPAL_CLIENT_ID= env('PAYPAL_LIVE_CLIENT_ID')
+#     PAYPAL_SECRET_KEY= env('PAYPAL_LIVE_SECRET_KEY')

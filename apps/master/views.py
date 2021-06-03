@@ -10,9 +10,23 @@ import json
 
 # Create your views here.
 def index(request):
-    # Jorge aqui van las llamadas a la base de datos. Ejemplo:
-    ##productos = Productos.objects.all()
-    ##... = ....objects.all()
+
+    # if 'total_spent' not in request.session.keys():
+    #     request.session['total_spent'] = 0
+
+    # if 'products_ordered' not in request.session.keys():
+    #     request.session['products_ordered'] = 0
+
+    # if 'product_price' not in request.session.keys():
+    #     request.session['product_price'] = 0
+    
+    if 'carrito' not in request.session.keys():
+        request.session['carrito'] = {
+            "productos" : [],
+            "productos_ordenados" : 0,
+            "precio_producto" : 0,
+            "precio_total" : 0,
+        }
 
     # obetener datos de la tienda:
     productos_request = requests.get("https://fakestoreapi.com/products")

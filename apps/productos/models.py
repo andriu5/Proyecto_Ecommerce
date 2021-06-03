@@ -11,7 +11,7 @@ class ProductoManager(models.Manager):
 
     def get_producto(self,producto):
         p = {
-            "id":producto.id,
+            "id": producto.id,
             "nombre" : producto.nombre,
             "cantidad_inventario" : producto.inventario,
             "cantidad_vendida" : producto.cantidad_vendida,

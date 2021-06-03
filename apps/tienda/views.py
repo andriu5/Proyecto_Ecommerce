@@ -1,4 +1,5 @@
 import datetime
+import ast
 import json
 from django.views import generic
 from .utils import get_or_set_order_session
@@ -13,7 +14,7 @@ from django.contrib import messages
 from django.core.paginator import EmptyPage, Paginator
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models import Count
 from django.db.models import Sum
 
@@ -56,26 +57,45 @@ def carrito_productos(request):
 
 
 def agregar_a_carrito(request):
+    print('*'*100)
+    print('Agregando Producto con ID: ',request.POST['producto_id'],' al Carrito...')
     if request.method == "POST":
-        if request.POST['producto-carrito'] == 'producto-detalle':
-            producto_id = request.POST['producto_id']
-            #Guardamos lo que sea que el usuario haya Posteado en form!
-            form = AddToCartForm(request.POST or None)
-            #Validamos el formulario:  Si los datos son validos guardamos en la sesion de compra!
-            if form.is_valid():
-                #tenemos 2 casos: usuarios logeados y usuarios no logeados en la aplicacion. Los trabajamos por separado
-                
-                #Para usuarios logeados:
-                if request.user is not None:
-                    request.user = {
-                            'id': request.user.id,
-                            'cantidad': request.user.first_name,
-                            'productos': ""
-                        }
-                else:
-                    request.session['carrito'] = 1
-                    request.session['producto_id'] = producto_id
+        producto_id = request.POST['producto_id']
+        producto = Producto.objects.get(id=producto_id)
+        p = Producto.objects.get_producto(producto)
+        # ast to solve single quote and final comma issues
+        producto_ast = ast.literal_eval(p)
+        producto_carrito = json.dumps(producto_ast)
+        print(producto_carrito)
+        cart_list = list(request.session['carrito']['productos'])
+        cart_list.append(producto_ast)
+        request.session['carrito']['productos'] = cart_list
+        print("Product ID:", request.POST['producto_id'])
+        print("Carrito:", request.session['carrito']['productos'])
+
+        quantity_from_form = int(request.POST["cantidad"])
+        price_from_form = int(Producto.objects.get(id=producto_id).precio)
+        print("Precio Producto: ",price_from_form)
+        total_charge = quantity_from_form * price_from_form
+        print("Total de productos añadidos: ", total_charge)
+        #En la página de pago, calcula y muestra el cargo total del pedido más reciente
+        request.session['carrito']['precio_producto'] = quantity_from_form * price_from_form
+        
+        #En la página de pago, calcula y muestra la cantidad total de todos los pedidos combinados
+        request.session['carrito']['productos_ordenados'] += quantity_from_form
+        print("Productos Ordenados: ",request.session['carrito']['productos_ordenados'])
+
+        #En la página de pago, calcula y muestra el monto total cobrado por todos los pedidos combinados
+        request.session['carrito']['precio_total'] += int(quantity_from_form * price_from_form)
+        print("Precio Total: ",request.session['carrito']['precio_total'] )
+
+        # si no hago 'request.session.modified', no se guardan los valores anidados en el carrito. Ver: https://docs.djangoproject.com/en/2.2/topics/http/sessions/#when-sessions-are-saved
+        request.session.modified = True
+
         return redirect("tienda:show_prod", producto_id)
+
+def carrito_debug(request):
+    return JsonResponse({"carrito": request.session['carrito']})
 
 #Esto lo saque de las tareas Antiguas: Amadon!
 def post_checkout(request):

@@ -22,13 +22,17 @@
         </div>
         <div class="col-7">
           <h4>Información del Producto: </h4>
+          <h3>Thank you for your business!</h3>
+          <p>We charged your credit card for ${{request.session.product_price|floatformat:2}}</p>
+          <p>You have ordered #{{request.session.products_ordered}} items so far and spent ${{request.session.total_spent|floatformat:2}} with Amadon.com!</p>
+          <p><a href="/">Go Back</a></p>
+          <a href="#"><button type="button" class="btn btn-outline-danger">Reset</button></a>
           <br>
           <p>{{producto.descripcion}}</p>
           {% if producto.in_stock %}
           <form method="POST" action="{% url 'tienda:agregar_a_carrito' %}">
             {% csrf_token %}
             {{form.as_p}}
-            {{producto}}
             <a href="#" class="btn btn-primary" value="{{p}}" onclick="saveItem({{p}});">Agregar al Carrito</a>
           </form>
           {% else %}
